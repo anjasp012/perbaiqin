@@ -13,16 +13,12 @@ class User extends Authenticatable implements JWTSubject
 
 {
     use HasApiTokens, HasFactory, Notifiable;
-    protected $guard_name ='api';
+    protected $guard_name = 'api';
 
-    /**
     protected $guarded = ['id'];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -72,13 +68,12 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
-    
+
     public function getPermissionArray()
     {
-        return $this->getAllPermissions()->mapWithKeys(function($pr){
+        return $this->getAllPermissions()->mapWithKeys(function ($pr) {
             return [$pr['name'] => true];
         });
-   
     }
 
     /**
@@ -90,7 +85,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
-        
+
     /**
      * getJWTCustomClaims
      *
