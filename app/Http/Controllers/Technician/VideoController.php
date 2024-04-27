@@ -64,7 +64,7 @@ class VideoController extends Controller
         ]);
 
         $video->captions = $request->captions;
-        $video->tags = $request->tags;
+        // $video->tags = $request->tags;
 
         if ($request->hasFile('file_video')) {
             // Delete old video file
@@ -74,7 +74,7 @@ class VideoController extends Controller
         }
 
         $video->save();
-        $video->tags()->sync($request->tags);
+        // $video->tags()->sync($request->tags);
         flashMessage('success', 'Video updated successfully.');
         return redirect()->route('technician.videos.index');
     }
