@@ -1,11 +1,11 @@
 import { FlashMessage } from '@/components/flash-message';
-import { Nav } from '@/layouts/admin/nav';
+import { Navigation } from '@/layouts/admin/navigation';
 import { Footer } from '@/layouts/footer';
 
 export function AdminLayout({ children }) {
     return (
         <>
-            <Nav />
+            <Navigation />
             <div className="min-h-screen">
                 {/* <Navigatio /> */}
                 <FlashMessage />

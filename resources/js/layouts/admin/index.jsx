@@ -1,4 +1,4 @@
-import { Nav } from './nav';
+import { Nav } from './navigation';
 import { ResponsiveNav } from './responsive-nav';
 
 export function Navigation() {

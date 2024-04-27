@@ -9,8 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { formatRupiah } from '@/lib/utils';
 import Pagination from '@/shared/pagination';
 import useSwal from '@/hooks/useSwal';
-import { UserLayout } from '@/layouts/user/user-layout';
-import Breadcrumb from '@/components/breadcrumb';
+import { TechnicianLayout } from '@/layouts/technician/technician-layout';
 
 export default function TransactionIndex() {
     const { auth, transactions } = usePage().props;
@@ -25,7 +24,7 @@ export default function TransactionIndex() {
                     <div className="px-4 py-6 sm:px-6 lg:p-8">
                         <div className="mb-8 flex justify-between">
                             <h2 className="text-lg font-bold">Transactions History</h2>
-                            <Search URL={route('transactions.index')} />
+                            <Search URL={route('technician.transactions.index')} />
                         </div>
                         <Card className="border-none">
                             <CardHeader></CardHeader>
@@ -54,7 +53,7 @@ export default function TransactionIndex() {
                                                 <TableCell>
                                                     <div className="flex gap-2">
                                                         <Link
-                                                            href={route('transactions.show', transaction.no_transaction)}
+                                                            href={route('technician.transactions.show', transaction.no_transaction)}
                                                             className={buttonVariants({ size: 'sm', variant: 'default' })}
                                                         >
                                                             Details
@@ -76,4 +75,4 @@ export default function TransactionIndex() {
     );
 }
 
-TransactionIndex.layout = (page) => <UserLayout children={page} />;
+TransactionIndex.layout = (page) => <TechnicianLayout children={page} />;

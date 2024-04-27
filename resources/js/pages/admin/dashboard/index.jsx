@@ -16,6 +16,7 @@ import {
 import { cn } from '@/lib/utils';
 import { AppLayout } from '@/layouts/app-layout';
 import { AdminLayout } from '@/layouts/admin-layout';
+import { Header } from '@/components/header';
 
 export default function DashboardIndex() {
     const { auth } = usePage().props;
@@ -24,11 +25,7 @@ export default function DashboardIndex() {
         <>
             <Head title="Dashboard" />
             <Container>
-                <div className="px-4 py-6 sm:px-6 lg:p-8">
-                    <div className="mb-8">
-                        <h1 className="text-xl font-semibold">Hello {auth.admin.name}</h1>
-                    </div>
-                </div>
+                <Header title={`Hello ${auth.admin.name}`} subtitle={''} />
             </Container>
         </>
     );

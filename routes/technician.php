@@ -4,10 +4,13 @@ use App\Http\Controllers\Technician\AppointmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Technician\Auth\LoginController;
 use App\Http\Controllers\Technician\Auth\RegisterController;
+use App\Http\Controllers\Technician\CartController;
 use App\Http\Controllers\Technician\CertificateController;
+use App\Http\Controllers\Technician\CheckoutController;
 use App\Http\Controllers\Technician\ConsultationController;
 use App\Http\Controllers\Technician\DashboardController;
 use App\Http\Controllers\Technician\ProfileController;
+use App\Http\Controllers\Technician\TransactionController;
 use App\Http\Controllers\Technician\VideoController;
 
 Route::group(['prefix' => 'technician', 'namespace' => 'Technician', 'as' => 'technician.'], function () {
@@ -44,5 +47,15 @@ Route::group(['prefix' => 'technician', 'namespace' => 'Technician', 'as' => 'te
         Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('profile/update', [ProfileController::class, 'update'])->name('profile.update');
         Route::get('videos', [VideoController::class, 'index'])->name('videos.index');
+
+        Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+        Route::post('cart/{id}', [CartController::class, 'post'])->name('cart.post');
+        Route::delete('cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+        Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+        Route::post('checkout/now', [CheckoutController::class, 'checkoutNow'])->name('checkout.checkoutNow');
+
+        Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
+        Route::get('transactions/details/{no_transaction}', [TransactionController::class, 'show'])->name('transactions.show');
     });
 });

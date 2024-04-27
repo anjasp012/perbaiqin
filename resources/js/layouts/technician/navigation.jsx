@@ -1,6 +1,6 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Link, router, usePage } from '@inertiajs/react';
-import { ChevronDown, GaugeIcon, Wrench, PowerIcon, HomeIcon, MenuIcon, User as UserIcon } from 'lucide-react';
+import { ChevronDown, GaugeIcon, Wrench, PowerIcon, HomeIcon, MenuIcon, User as UserIcon, ShoppingCartIcon } from 'lucide-react';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -8,10 +8,12 @@ import { useEffect, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { ApplicationLogo } from '@/components/application-logo';
 
-const navLinkClasses = 'text-sm items-center font-medium tracking-tight text-muted-foreground hover:text-foreground inline-flex px-2 py-3 transition-colors duration-300';
+const navLinkClasses =
+    'text-sm items-center font-medium tracking-tight text-muted-foreground hover:text-foreground inline-flex px-2 py-3 transition-colors duration-300';
 
 export function Navigation() {
     const { auth } = usePage().props;
+
     const [open, setOpen] = useState(false);
     useEffect(() => {
         return router.on('finish', () => {
@@ -20,10 +22,9 @@ export function Navigation() {
     }, []);
     return (
         <>
-
             <nav className="relative z-10 mx-auto hidden max-w-screen-2xl items-center justify-between border-b px-4 py-2.5 sm:flex sm:px-6">
                 <div className="flex items-center">
-                    <Link href={route('technician.dashboard')} className="mr-4 flex justify-between font-bold">
+                    <Link href={route('home')} className="mr-4 flex justify-between font-bold">
                         <ApplicationLogo className="me-2 h-6 w-6" /> <h2>PerbaiQin</h2>
                     </Link>
                     {navLinks.map((navLink, index) => (
@@ -39,21 +40,31 @@ export function Navigation() {
                     {auth.technician ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger className={cn(buttonVariants({ size: 'sm' }), 'tracking-tighter')}>
-                                {auth.technician.name} <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                                {auth.technician.name}{' '}
+                                <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-60">
                                 <DropdownMenuItem asChild>
                                     <Link href={route('technician.dashboard')}>
-                                        <GaugeIcon className="mr-2 h-4 w-4" />Dashboard
+                                        <GaugeIcon className="mr-2 h-4 w-4" />
+                                        Dashboard
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href={route('technician.cart.index')}>
+                                        <ShoppingCartIcon className="mr-2 h-4 w-4" />
+                                        Cart
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link href={route('technician.profile.edit')}>
-                                        <UserIcon className="mr-2 h-4 w-4" />Profile
+                                        <UserIcon className="mr-2 h-4 w-4" />
+                                        Profile
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onSelect={() => router.post(route('technician.logout'))}>
-                                    <PowerIcon className="mr-2 h-4 w-4" />Log out
+                                    <PowerIcon className="mr-2 h-4 w-4" />
+                                    Log out
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
@@ -75,7 +86,6 @@ export function Navigation() {
                 </div>
             </nav>
 
-
             <nav className="sm:hidden">
                 <div className="fixed top-0 z-20 flex w-full items-center justify-between border-b px-4 py-3 shadow-sm backdrop-blur-lg">
                     <Link href="/" className="mr-4 flex justify-between font-bold">
@@ -90,7 +100,7 @@ export function Navigation() {
                 </div>
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetContent side="left">
-                        <Link href="/" className="mr-4 mb-4 flex items-center">
+                        <Link href="/" className="mb-4 mr-4 flex items-center">
                             <ApplicationLogo className="me-2 h-6 w-6" />
                             <h2 className="text-xl font-bold">PerbaiQin</h2>
                         </Link>
@@ -114,15 +124,17 @@ const navLinks = [
     { label: 'Consultations', route: 'technician.consultations.index' },
     { label: 'Appointments', route: 'technician.appointments.index' },
     { label: 'Certificates', route: 'technician.certificates.index' },
+    { label: 'Transaction History', route: 'technician.transactions.index' },
 ];
 
-const dropdownLinks = [
-    {}
-]
+const dropdownLinks = [{}];
 export function NavLink({ active, children, href }) {
-    return <Link className={cn(navLinkClasses, active && 'font-semibold text-foreground')} href={href}>{children}</Link>;
+    return (
+        <Link className={cn(navLinkClasses, active && 'font-semibold text-foreground')} href={href}>
+            {children}
+        </Link>
+    );
 }
-
 
 export function NavLinkResponsive({ active, children, href }) {
     return (

@@ -17,7 +17,12 @@ export default function ProductShow() {
 
     const addToCartHandler = (e) => {
         e.preventDefault();
-        router.post(`/cart/${product.id}`);
+        {
+            auth.technician != null ? router.post(`/technician/cart/${product.id}`) : '';
+        }
+        {
+            auth.user != null ? router.post(`/cart/${product.id}`) : '';
+        }
     };
 
     return (

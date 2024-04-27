@@ -1,6 +1,6 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Link, router, usePage } from '@inertiajs/react';
-import { ChevronDown, GaugeIcon, Wrench, PowerIcon, HomeIcon, MenuIcon, Settings2Icon, ShoppingCartIcon, History } from 'lucide-react';
+import { ChevronDown, GaugeIcon, Wrench, PowerIcon, HomeIcon, MenuIcon, Settings2Icon, ShoppingCartIcon, History, UserIcon } from 'lucide-react';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -37,64 +37,25 @@ export function Navigation() {
                 <div className="flex items-center">
                     <ThemeSwitcher />
                     <div className="mx-4 h-8 w-px bg-foreground/10" />
-                    {auth.user || auth.technician || auth.admin || auth.vendor ? (
+                    {auth.admin ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger className={cn(buttonVariants({ size: 'sm' }), 'tracking-tighter')}>
-                                {(auth.user && auth.user.name) ||
-                                    (auth.technician && auth.technician.name) ||
-                                    (auth.admin && auth.admin.name) ||
-                                    (auth.vendor && auth.vendor.name) ||
-                                    'Default Name'}
-                                <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                                {auth.admin.name} <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-60">
                                 <DropdownMenuItem asChild>
-                                    <Link
-                                        href={route(`${(auth.vendor && 'vendor') || (auth.admin && 'admin') || (auth.technician && 'technician')}.dashboard`)}
-                                    >
+                                    <Link href={route('admin.dashboard')}>
                                         <GaugeIcon className="mr-2 h-4 w-4" />
                                         Dashboard
                                     </Link>
                                 </DropdownMenuItem>
-                                {(auth.user && (
-                                    <>
-                                        <DropdownMenuItem asChild>
-                                            <Link href={route('cart.index')}>
-                                                <ShoppingCartIcon className="mr-2 h-4 w-4" />
-                                                Cart
-                                            </Link>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem asChild>
-                                            <Link href={route('transactions.index')}>
-                                                <History className="mr-2 h-4 w-4" />
-                                                Transaction History
-                                            </Link>
-                                        </DropdownMenuItem>
-                                    </>
-                                )) ||
-                                    (auth.technician && (
-                                        <>
-                                            <DropdownMenuItem asChild>
-                                                <Link href={route('technician.cart.index')}>
-                                                    <ShoppingCartIcon className="mr-2 h-4 w-4" />
-                                                    Cart
-                                                </Link>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem asChild>
-                                                <Link href={route('technician.transactions.index')}>
-                                                    <History className="mr-2 h-4 w-4" />
-                                                    Transaction History
-                                                </Link>
-                                            </DropdownMenuItem>
-                                        </>
-                                    ))}
                                 <DropdownMenuItem asChild>
-                                    <Link href={route('profile.edit')}>
-                                        <Settings2Icon className="mr-2 h-4 w-4" />
-                                        Settings
+                                    <Link href="">
+                                        <UserIcon className="mr-2 h-4 w-4" />
+                                        Profile
                                     </Link>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onSelect={() => router.post(route('logout'))}>
+                                <DropdownMenuItem onSelect={() => router.post(route('admin.logout'))}>
                                     <PowerIcon className="mr-2 h-4 w-4" />
                                     Log out
                                 </DropdownMenuItem>
@@ -152,11 +113,11 @@ export function Navigation() {
 }
 
 const navLinks = [
-    { label: 'Home', route: 'home' },
-    { label: 'Ask Technician', route: 'landing.ask-technician.index' },
-    { label: 'Appointments', route: 'landing.appointments.index' },
-    { label: 'Videos', route: 'home' },
-    { label: 'Products', route: 'landing.products.index' },
+    { label: 'Dashboard', route: 'admin.dashboard' },
+    { label: 'Technicians', route: 'admin.technicians.index' },
+    { label: 'Specialists', route: 'admin.specialists.index' },
+    { label: 'Vendors', route: 'admin.vendors.index' },
+    { label: 'Products', route: 'admin.products.index' },
 ];
 
 export function NavLink({ active, children, href }) {

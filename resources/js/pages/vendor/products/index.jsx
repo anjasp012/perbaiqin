@@ -13,7 +13,6 @@ import { VendorLayout } from '@/layouts/vendor/vendor-layout';
 import Pagination from '@/shared/pagination';
 import useSwal from '@/hooks/useSwal';
 
-
 export default function ProductIndex() {
     const { auth, products } = usePage().props;
 
@@ -26,12 +25,11 @@ export default function ProductIndex() {
                     <Header title={'Vendor Products'} subtitle={`Manage products`}></Header>
                     <div className="px-4 py-6 sm:px-6 lg:p-8">
                         <div className="mb-8 flex justify-between">
-                            <h2 className="text-lg font-bold">Products</h2>
+                            <Link href={route('vendor.products.create')} className={buttonVariants({ variant: 'default' })}>
+                                Create New Product
+                            </Link>
                             <Search URL={route('vendor.products.index')} />
                         </div>
-                        <Link href={route('vendor.products.create')} className={buttonVariants({ variant: 'default' })}>
-                            Create New Product
-                        </Link>
                         <Card className="border-none">
                             <CardHeader></CardHeader>
                             <CardContent>
@@ -51,16 +49,21 @@ export default function ProductIndex() {
                                             <TableRow key={index}>
                                                 <TableCell>{++index + (products.current_page - 1) * products.per_page}</TableCell>
                                                 <TableCell>
-                                                    <Image width={100} className="aspect-[16/9] border w-full rounded-2xl object-cover sm:aspect-[2/1] lg:aspect-[3/2]" src={product.image} />
+                                                    <Image
+                                                        width={100}
+                                                        className="aspect-[16/9] w-full rounded-2xl border object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+                                                        src={product.image}
+                                                    />
                                                 </TableCell>
                                                 <TableCell>{product.name}</TableCell>
-                                                <TableCell>
-                                                    {formatRupiah(product.price)}
-                                                </TableCell>
+                                                <TableCell>{formatRupiah(product.price)}</TableCell>
                                                 <TableCell>{product.vendor.name}</TableCell>
                                                 <TableCell>
                                                     <div className="flex gap-2">
-                                                        <Link href={route('vendor.products.edit', product.slug)} className={buttonVariants({ size: 'sm', variant: 'default' })}>
+                                                        <Link
+                                                            href={route('vendor.products.edit', product.slug)}
+                                                            className={buttonVariants({ size: 'sm', variant: 'default' })}
+                                                        >
                                                             Edit
                                                         </Link>
 
