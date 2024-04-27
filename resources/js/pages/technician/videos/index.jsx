@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { formatDateTime } from '@/lib/utils';
 import useSwal from '@/hooks/useSwal';
+import { Image } from '@/components/image';
 
 const VideoIndex = ({ videos }) => {
     const { ask } = useSwal();
@@ -25,9 +26,14 @@ const VideoIndex = ({ videos }) => {
                         <Search URL={route('technician.videos.index')} />
                     </div>
 
-                    <div className={`grid grid-cols-3 gap-3`}>
+                    <div className={`grid grid-cols-4 gap-3`}>
                         {videos.data.map((video, index) => (
-                            <Card key={video.id}>
+                            <Card className="overflow-hidden rounded" key={video.id}>
+                                <Image
+                                    skeletonHeight="40"
+                                    className="aspect-[16/9] w-full object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+                                    src={`/storage/${video.thumbnail}`}
+                                ></Image>
                                 <CardContent>
                                     <div className="mt-3 flex items-center justify-between">
                                         <span className="text-sm text-gray-700 dark:text-gray-300">{formatDateTime(video.created_at)}</span>

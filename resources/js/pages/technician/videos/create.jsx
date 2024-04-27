@@ -14,6 +14,7 @@ import { Select } from '@radix-ui/react-select';
 export default function VideoCreate({ tags }) {
     const { errors } = usePage().props;
     const { data, setData, post, processing } = useForm({
+        thumbnail: null,
         captions: '',
         file_video: null,
     });
@@ -22,6 +23,7 @@ export default function VideoCreate({ tags }) {
         console.log(data);
         e.preventDefault();
         const formData = new FormData();
+        formData.append('thumbnail', data.thumbnail);
         formData.append('captions', data.captions);
         formData.append('file_video', data.file_video);
         post(route('technician.videos.store'), formData);
@@ -29,7 +31,7 @@ export default function VideoCreate({ tags }) {
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
-        if (name === 'file_video') {
+        if (name === 'file_video' || name === 'thumbnail') {
             setData(name, files[0]);
         } else {
             setData(name, value);
@@ -45,7 +47,7 @@ export default function VideoCreate({ tags }) {
                     <form onSubmit={handleSubmit}>
                         <div className="mt-4">
                             <Label htmlFor="thumbnail">Thumbnail</Label>
-                            <Input type="file" name="thumbnail" id="thumbnail" value={data.thumbnail} onChange={handleChange} />
+                            <Input type="file" name="thumbnail" id="thumbnail" accept="image/*" onChange={handleChange} />
                             {errors.thumbnail && <div className="text-sm text-red-500">{errors.thumbnail}</div>}
                         </div>
                         <div className="mt-4">

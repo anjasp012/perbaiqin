@@ -11,7 +11,11 @@ const VideoCard = ({ video }) => {
     return (
         <Link href={route('landing.videos.show', video.id)}>
             <Card className="overflow-hidden rounded" key={video.id}>
-                <img src="https://awsimages.detik.net.id/community/media/visual/2023/04/14/gambar-pemandangan-6_169.jpeg?w=1200" alt="" />
+                <Image
+                    skeletonHeight="40"
+                    className="aspect-[16/9] w-full object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+                    src={`/storage/${video.thumbnail}`}
+                ></Image>{' '}
                 <CardContent>
                     <div className="mt-3 flex items-center justify-between">
                         <span className="text-sm text-gray-700 dark:text-gray-300">{formatDateTime(video.created_at)}</span>

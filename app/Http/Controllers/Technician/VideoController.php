@@ -29,14 +29,17 @@ class VideoController extends Controller
     {
         $request->validate([
             'captions' => 'required|string',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             // 'tags' => 'required|array',
             'file_video' => 'required|file|mimes:mp4,mov,avi,wmv|max:10240',
         ]);
 
+        $imagePath = $request->file('thumbnail')->store('videos');
         $technician = Auth::guard('technician')->user();
 
         $video = new Video();
         $video->technician_id = $technician->id;
+        $video->thumbnail = $imagePath;
         $video->captions = $request->captions;
 
         $videoFile = $request->file('file_video');
@@ -58,6 +61,7 @@ class VideoController extends Controller
     {
         $video = Video::findOrFail($id);
         $request->validate([
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'captions' => 'required|string',
             // 'tags' => 'required|array',
             'file_video' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:10240', // Max 200MB
@@ -66,6 +70,12 @@ class VideoController extends Controller
         $video->captions = $request->captions;
         // $video->tags = $request->tags;
 
+        if ($request->hasFile('thumbnail')) {
+            // Delete old video file
+            Storage::disk('public')->delete($video->thumbnail);
+            $newThumbnailFile = $request->file('thumbnail');
+            $video->thumbnail = $newThumbnailFile->store('videos', 'public');
+        }
         if ($request->hasFile('file_video')) {
             // Delete old video file
             Storage::disk('public')->delete($video->file_video);
