@@ -44,6 +44,11 @@ export default function VideoCreate({ tags }) {
                 <div className="px-4 py-6 sm:px-6 lg:p-8">
                     <form onSubmit={handleSubmit}>
                         <div className="mt-4">
+                            <Label htmlFor="thumbnail">Thumbnail</Label>
+                            <Input type="file" name="thumbnail" id="thumbnail" value={data.thumbnail} onChange={handleChange} />
+                            {errors.thumbnail && <div className="text-sm text-red-500">{errors.thumbnail}</div>}
+                        </div>
+                        <div className="mt-4">
                             <Label htmlFor="video">Video</Label>
                             <Input type="file" name="file_video" id="file_video" accept="video/*" onChange={handleChange} />
                             {errors.file_video && <div className="text-sm text-red-500">{errors.file_video}</div>}

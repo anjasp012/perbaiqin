@@ -43,6 +43,34 @@ export default function VideoIndex() {
                                         ) : (
                                             <p>No videos found.</p>
                                         )}
+                                        {videos.data.length > 0 ? (
+                                            videos.data.map((video) => (
+                                                <VideoCard key={video.id} video={video} /> // Gunakan TechnicianCard di sini
+                                            ))
+                                        ) : (
+                                            <p>No videos found.</p>
+                                        )}
+                                        {videos.data.length > 0 ? (
+                                            videos.data.map((video) => (
+                                                <VideoCard key={video.id} video={video} /> // Gunakan TechnicianCard di sini
+                                            ))
+                                        ) : (
+                                            <p>No videos found.</p>
+                                        )}
+                                        {videos.data.length > 0 ? (
+                                            videos.data.map((video) => (
+                                                <VideoCard key={video.id} video={video} /> // Gunakan TechnicianCard di sini
+                                            ))
+                                        ) : (
+                                            <p>No videos found.</p>
+                                        )}
+                                        {videos.data.length > 0 ? (
+                                            videos.data.map((video) => (
+                                                <VideoCard key={video.id} video={video} /> // Gunakan TechnicianCard di sini
+                                            ))
+                                        ) : (
+                                            <p>No videos found.</p>
+                                        )}
                                     </div>
                                 </div>
 
