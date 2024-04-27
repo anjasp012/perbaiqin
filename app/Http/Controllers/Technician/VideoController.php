@@ -48,16 +48,18 @@ class VideoController extends Controller
         return redirect()->route('technician.videos.index');
     }
 
-    public function edit(Video $video)
+    public function edit($id)
     {
+        $video = Video::findOrFail($id);
         return inertia('technician/videos/edit', ['video' => $video]);
     }
 
-    public function update(Request $request, Video $video)
+    public function update(Request $request, $id)
     {
+        $video = Video::findOrFail($id);
         $request->validate([
             'captions' => 'required|string',
-            'tags' => 'required|array',
+            // 'tags' => 'required|array',
             'file_video' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:10240', // Max 200MB
         ]);
 
@@ -77,11 +79,12 @@ class VideoController extends Controller
         return redirect()->route('technician.videos.index');
     }
 
-    public function destroy(Video $video)
+    public function destroy($id)
     {
         // Delete video file from storage
+        $video = Video::findOrFail($id);
         Storage::disk('public')->delete($video->file_video);
-        $video->tags()->detach();
+        // $video->tags()->detach();
         // Delete video record from database
         $video->delete();
         flashMessage('success', 'Video deleted successfully.');

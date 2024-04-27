@@ -8,8 +8,10 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { formatDateTime } from '@/lib/utils';
+import useSwal from '@/hooks/useSwal';
 
 const VideoIndex = ({ videos }) => {
+    const { ask } = useSwal();
     return (
         <Container>
             <Head title="Videos"></Head>
@@ -43,7 +45,7 @@ const VideoIndex = ({ videos }) => {
                                             variant="destructive"
                                             onClick={() =>
                                                 ask({
-                                                    url: route('technician.videos.index'),
+                                                    url: route('technician.videos.destroy', video.id),
                                                     method: 'delete',
                                                     icon: 'warning',
                                                     message: 'Are you sure you want to delete this video?',
