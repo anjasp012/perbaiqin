@@ -50,7 +50,14 @@ export function Navigation() {
                             <DropdownMenuContent align="end" className="w-60">
                                 <DropdownMenuItem asChild>
                                     <Link
-                                        href={route(`${(auth.vendor && 'vendor') || (auth.admin && 'admin') || (auth.technician && 'technician')}.dashboard`)}
+                                        href={route(
+                                            `${
+                                                (auth.vendor && 'vendor.') ||
+                                                (auth.admin && 'admin.') ||
+                                                (auth.technician && 'technician.') ||
+                                                (auth.user && '')
+                                            }dashboard`,
+                                        )}
                                     >
                                         <GaugeIcon className="mr-2 h-4 w-4" />
                                         Dashboard
