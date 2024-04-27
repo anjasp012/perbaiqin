@@ -124,6 +124,7 @@ const navLinks = [
     { label: 'Consultations', route: 'technician.consultations.index' },
     { label: 'Appointments', route: 'technician.appointments.index' },
     { label: 'Certificates', route: 'technician.certificates.index' },
+    { label: 'Videos', route: 'technician.videos.index' },
     { label: 'Transaction History', route: 'technician.transactions.index' },
 ];
 

@@ -36,27 +36,19 @@ export default function AppointmentIndex() {
                             { label: 'Appointments', url: '/appointments' },
                         ]}
                     />
-                    <Header title={"Appointments"} subtitle={"Make Appointments with Technicians"}>
-
-                    </Header>
+                    <Header title={'Appointments'} subtitle={'Make Appointments with Technicians'}></Header>
                     <div className="mx-auto sm:px-6 lg:px-8 lg:py-14">
-
                         <div>
                             <form onSubmit={handleSearchSubmit} className="w-full">
                                 <div className="relative">
-                                    <Input
-                                        type="text"
-                                        value={searchQuery}
-                                        onChange={handleSearchChange}
-                                        placeholder="Search technician or specialization..."
-                                    />
-                                    <Button size="icon" variant="secondary" type="submit" className="absolute border right-0 top-0">
+                                    <Input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search technician or specialization..." />
+                                    <Button size="icon" variant="secondary" type="submit" className="absolute right-0 top-0 border">
                                         <Search />
                                     </Button>
                                 </div>
                             </form>
                             <div className="mt-8">
-                                <div className="grid grid-cols-1 md:grid-cols-3  gap-4">
+                                <div className="grid grid-cols-1 gap-4  md:grid-cols-3">
                                     {technicians.data.length > 0 ? (
                                         technicians.data.map((technician) => (
                                             <AppointmentTechnicianCard key={technician.id} technician={technician} /> // Gunakan TechnicianCard di sini

@@ -155,7 +155,7 @@ const navLinks = [
     { label: 'Home', route: 'home' },
     { label: 'Ask Technician', route: 'landing.ask-technician.index' },
     { label: 'Appointments', route: 'landing.appointments.index' },
-    { label: 'Videos', route: 'home' },
+    { label: 'Videos', route: 'landing.videos.index' },
     { label: 'Products', route: 'landing.products.index' },
 ];
 

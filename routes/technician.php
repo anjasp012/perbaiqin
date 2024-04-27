@@ -31,22 +31,22 @@ Route::group(['prefix' => 'technician', 'namespace' => 'Technician', 'as' => 'te
         Route::post('consultations/send/{consultationId}', [ConsultationController::class, 'send'])->name('consultations.send');
         Route::get('appointments', [AppointmentController::class, 'index'])->name('appointments.index');
 
-        // Route untuk halaman indeks sertifikat
         Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
-        // Route untuk halaman pembuatan sertifikat baru
         Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificates.create');
-        // Route untuk menyimpan sertifikat baru
         Route::post('/certificates', [CertificateController::class, 'store'])->name('certificates.store');
-        // Route untuk halaman edit sertifikat
         Route::get('/certificates/{certificate}/edit', [CertificateController::class, 'edit'])->name('certificates.edit');
-        // Route untuk menyimpan perubahan pada sertifikat
         Route::put('/certificates/{certificate}', [CertificateController::class, 'update'])->name('certificates.update');
-        // Route untuk menghapus sertifikat
         Route::delete('/certificates/{certificate}', [CertificateController::class, 'destroy'])->name('certificates.destroy');
+
+        Route::get('videos', [VideoController::class, 'index'])->name('videos.index');
+        Route::get('/videos/create', [VideoController::class, 'create'])->name('videos.create');
+        Route::post('/videos', [VideoController::class, 'store'])->name('videos.store');
+        Route::get('/videos/{certificate}/edit', [VideoController::class, 'edit'])->name('videos.edit');
+        Route::put('/videos/{certificate}', [VideoController::class, 'update'])->name('videos.update');
+        Route::delete('/videos/{certificate}', [VideoController::class, 'destroy'])->name('videos.destroy');
 
         Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('profile/update', [ProfileController::class, 'update'])->name('profile.update');
-        Route::get('videos', [VideoController::class, 'index'])->name('videos.index');
 
         Route::get('cart', [CartController::class, 'index'])->name('cart.index');
         Route::post('cart/{id}', [CartController::class, 'post'])->name('cart.post');

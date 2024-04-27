@@ -12,12 +12,14 @@ import { formatDateTime } from '@/lib/utils';
 const VideoIndex = ({ videos }) => {
     return (
         <Container>
-            <Head title='Videos'></Head>
+            <Head title="Videos"></Head>
             <Header title={`Technician Videos`} subtitle={'Videos'} />
-            <div className='mt-5'>
+            <div className="mt-5">
                 <div className="px-4 py-6 sm:px-6 lg:p-8">
-                    <div className="mb-8 flex justify-between">
-                        <h2 className="text-lg font-bold">Your Videos</h2>
+                    <div className="mb-8 flex items-center justify-between">
+                        <Link href={route('technician.videos.create')} className={buttonVariants({ variant: 'default' })}>
+                            Upload New Videos
+                        </Link>
                         <Search URL={route('technician.videos.index')} />
                     </div>
 
@@ -25,12 +27,14 @@ const VideoIndex = ({ videos }) => {
                         {videos.data.map((video, index) => (
                             <Card key={video.id}>
                                 <CardContent>
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-gray-700 dark:text-gray-300 text-sm">{formatDateTime(video.created_at)}</span>
-                                        <Badge variant="primary" className="text-xs">{video.tags}</Badge>
+                                    <div className="mt-3 flex items-center justify-between">
+                                        <span className="text-sm text-gray-700 dark:text-gray-300">{formatDateTime(video.created_at)}</span>
+                                        {/* <Badge variant="primary" className="text-xs">
+                                            {video.tags}
+                                        </Badge> */}
                                     </div>
-                                    <h3 className="text-lg font-bold mt-2">{video.captions}</h3>
-                                    <div className="flex justify-between items-center mt-4">
+                                    <h3 className="mt-2 text-lg font-bold">{video.captions}</h3>
+                                    <div className="mt-4 flex items-center justify-between">
                                         <Link href={route('technician.videos.edit', video.id)} className={buttonVariants({ variant: 'secondary' })}>
                                             Edit
                                         </Link>

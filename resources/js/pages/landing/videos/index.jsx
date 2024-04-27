@@ -10,54 +10,44 @@ import { AppLayout } from '@/layouts/app-layout';
 import Breadcrumb from '@/components/breadcrumb';
 import Pagination from '@/shared/pagination';
 import Search from '@/shared/search';
-import ProductCard from './product-card';
+import VideoCard from './video-card';
 import { Header } from '@/components/header';
 
-export default function ProductIndex() {
-    const { auth, products } = usePage().props;
-    const [searchQuery, setSearchQuery] = useState('');
-
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
-    };
-
-    const handleSearchSubmit = (e) => {
-        e.preventDefault();
-        router.get(route('landing.products.index', { search: searchQuery }));
-    };
+export default function VideoIndex() {
+    const { auth, videos } = usePage().props;
 
     return (
         <>
-            <Head title="Products" />
+            <Head title="Videos" />
             <Container>
                 <>
                     <Breadcrumb
                         links={[
                             { label: 'Home', url: '/' },
-                            { label: 'Products', url: '/products' },
+                            { label: 'Videos', url: '/videos' },
                         ]}
                     />
-                    <Header title={'Products'} subtitle={`Products of vendors`}></Header>
+                    <Header title={'Videos'} subtitle={`All Videos`}></Header>
                     <div className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
                         <div className="grid gap-10 md:grid-cols-12">
                             <div className="md:col-span-12">
                                 <div className="flex justify-end">
-                                    <Search URL={route('landing.products.index')} />
+                                    <Search URL={route('landing.videos.index')} />
                                 </div>
                                 <div className="mt-8">
                                     <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                                        {products.data.length > 0 ? (
-                                            products.data.map((product) => (
-                                                <ProductCard key={product.id} product={product} /> // Gunakan TechnicianCard di sini
+                                        {videos.data.length > 0 ? (
+                                            videos.data.map((video) => (
+                                                <VideoCard key={video.id} video={video} /> // Gunakan TechnicianCard di sini
                                             ))
                                         ) : (
-                                            <p>No products found.</p>
+                                            <p>No videos found.</p>
                                         )}
                                     </div>
                                 </div>
 
                                 <div className="mt-2">
-                                    <Pagination links={products.links} />
+                                    <Pagination links={videos.links} />
                                 </div>
                             </div>
                         </div>
@@ -68,4 +58,4 @@ export default function ProductIndex() {
     );
 }
 
-ProductIndex.layout = (page) => <AppLayout children={page} />;
+VideoIndex.layout = (page) => <AppLayout children={page} />;

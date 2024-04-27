@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Technician;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TagResource;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -19,19 +21,20 @@ class VideoController extends Controller
 
     public function create()
     {
-        return inertia('technician/videos/create');
+        $tags = Tag::all();
+        return inertia('technician/videos/create', ['tags' => $tags]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'captions' => 'required|string',
-            'tags' => 'required|array',
+            // 'tags' => 'required|array',
             'file_video' => 'required|file|mimes:mp4,mov,avi,wmv|max:10240',
         ]);
 
         $technician = Auth::guard('technician')->user();
-        
+
         $video = new Video();
         $video->technician_id = $technician->id;
         $video->captions = $request->captions;
@@ -40,7 +43,7 @@ class VideoController extends Controller
         $video->file_video = $videoFile->store('videos', 'public');
 
         $video->save();
-        $video->tags()->sync($request->tags);
+        // $video->tags()->sync($request->tags);
         flashMessage('success', 'Video created successfully.');
         return redirect()->route('technician.videos.index');
     }
