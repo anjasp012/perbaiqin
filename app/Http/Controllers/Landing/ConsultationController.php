@@ -77,10 +77,6 @@ class ConsultationController extends Controller
         $user = Auth::user();
         $technician = auth()->guard('technician')->user() ?? $user;
 
-        // if ($user->id !== $consultation->user_id && (!$technician || $technician->id !== $consultation->technician_id)) {
-        //     abort(403, 'Unauthorized');
-        // }
-
         return inertia('consultation/chat', [
             'consultation' => $consultation,
         ]);
@@ -88,7 +84,6 @@ class ConsultationController extends Controller
 
     public function fetch_chat($consultationId)
     {
-        // Temukan konsultasi yang sesuai berdasarkan ID
         $consultation = Consultation::with('technician')->findOrFail($consultationId);
         $messages = $consultation->messages()->with('user', 'technician', 'product')->orderBy('created_at', 'asc')->get();
         return response()->json([

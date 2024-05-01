@@ -15,14 +15,14 @@ class ConsultationController extends Controller
     {
         $technician = Auth::guard('technician')->user();
         $consultations = Consultation::where('technician_id', $technician->id)
-        ->with('user')
-        ->when(request()->q, function($query) {
-            $query->whereHas('user', function($subquery) {
-                $subquery->where('name', 'like', '%' . request()->q . '%');
-            });
-        })
-        ->latest()
-        ->paginate(10);
+            ->with('user')
+            ->when(request()->q, function ($query) {
+                $query->whereHas('user', function ($subquery) {
+                    $subquery->where('name', 'like', '%' . request()->q . '%');
+                });
+            })
+            ->latest()
+            ->paginate(10);
         $consultations->appends(['q' => request()->q]);
         return inertia('technician/consultation/index', [
             'consultations' => $consultations,
@@ -81,7 +81,7 @@ class ConsultationController extends Controller
             $message->image  = $image->hashName() ?? null;
 
             $message->save();
-        }else{
+        } else {
             $message->image  = NULL;
             $message->save();
         }
@@ -89,7 +89,15 @@ class ConsultationController extends Controller
         if (isset($request->product_id)) {
             [$message->product_id = $request->product_id];
         }
-        event(new NewChatMessage($message->id, $consultationId, $request->message, $message->image, $message->sender_type, now()));
+        broadcast(new NewChatMessage(
+            $message->id,
+            $consultationId,
+            $request->message,
+            $message->image,
+            $message->sender_type,
+            now()
+        ))->toOthers();
+
         return response()->json([
             'success' => true,
             'message' => $message,
@@ -166,5 +174,4 @@ class ConsultationController extends Controller
             ], 400);
         }
     }
-
 }

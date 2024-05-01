@@ -20,7 +20,7 @@ export default function CartIndex() {
 
     const checkoutHandler = (e) => {
         e.preventDefault();
-        router.get(`/checkout`);
+        router.get(`/user/checkout`);
     };
     return (
         <>

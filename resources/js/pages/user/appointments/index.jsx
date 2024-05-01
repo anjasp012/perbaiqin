@@ -13,19 +13,19 @@ import { UserLayout } from '@/layouts/user/user-layout';
 import Breadcrumb from '@/components/breadcrumb';
 
 export default function TransactionIndex() {
-    const { auth, transactions } = usePage().props;
+    const { auth, appointments } = usePage().props;
 
     const { ask } = useSwal();
     return (
         <>
-            <Head title="Transaction" />
+            <Head title="Appointment" />
             <Container>
                 <>
-                    <Header title={'Transactions History'} subtitle={`Manage transactions history`}></Header>
+                    <Header title={'Appointments History'} subtitle={`Manage Appointments history`}></Header>
                     <div className="px-4 py-6 sm:px-6 lg:p-8">
                         <div className="mb-8 flex justify-between">
-                            <h2 className="text-lg font-bold">Transactions History</h2>
-                            <Search URL={route('user.transactions.index')} />
+                            <h2 className="text-lg font-bold">Appointments History</h2>
+                            <Search URL={route('user.appointments.index')} />
                         </div>
                         <Card className="border-none">
                             <CardHeader></CardHeader>
@@ -33,40 +33,40 @@ export default function TransactionIndex() {
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead>Transaction Idx</TableHead>
-                                            <TableHead>Total Price</TableHead>
-                                            <TableHead>Payment Method</TableHead>
+                                            <TableHead>No.</TableHead>
+                                            <TableHead>Technician Id</TableHead>
+                                            <TableHead>Date</TableHead>
+                                            <TableHead>Time</TableHead>
                                             <TableHead>Status</TableHead>
-                                            <TableHead>Transaction Date</TableHead>
+                                            {/* <TableHead>Transaction Date</TableHead>
                                             <TableHead>Vendor</TableHead>
-                                            <TableHead>Actions</TableHead>
+                                            <TableHead>Actions</TableHead> */}
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {transactions.data.map((transaction, index) => (
+                                        {appointments.data.map((appointment, index) => (
                                             <TableRow key={index}>
-                                                <TableCell>{transaction.no_transaction}</TableCell>
-                                                <TableCell>{formatRupiah(transaction.total_price)}</TableCell>
-                                                <TableCell>{transaction.payment_method}</TableCell>
-                                                <TableCell>{transaction.transaction_status}</TableCell>
-                                                <TableCell>{transaction.created_at}</TableCell>
-                                                <TableCell>{transaction.vendor.name}</TableCell>
-                                                <TableCell>
+                                                <TableCell>{appointment.id}</TableCell>
+                                                <TableCell>{appointment.technician.name}</TableCell>
+                                                <TableCell>{appointment.date}</TableCell>
+                                                <TableCell>{appointment.time}</TableCell>
+                                                <TableCell>{appointment.status}</TableCell>
+                                                {/* <TableCell>
                                                     <div className="flex gap-2">
                                                         <Link
-                                                            href={route('user.transactions.show', transaction.no_transaction)}
+                                                            href={route('appointments.show', appointment.no_transaction)}
                                                             className={buttonVariants({ size: 'sm', variant: 'default' })}
                                                         >
                                                             Details
                                                         </Link>
                                                     </div>
-                                                </TableCell>
+                                                </TableCell> */}
                                             </TableRow>
                                         ))}
                                     </TableBody>
                                 </Table>
 
-                                <Pagination links={transactions.links} />
+                                <Pagination links={appointments.links} />
                             </CardContent>
                         </Card>
                     </div>

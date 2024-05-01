@@ -34,21 +34,22 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:' . Technician::class,
             'password' => 'required|confirmed',
             'phone' => 'required|numeric|digits_between:10,13',
+            'price' => 'required|numeric',
             'agree' => 'required',
         ]);
-        
+
         $slug = Str::slug($request->name, '-');
         $technician = Technician::create([
             'name' => $request->name,
-            
+
             'slug' => $slug,
             'email' => $request->email,
             'phone' => $request->phone,
+            'price' => $request->price,
             'password' => Hash::make($request->password),
         ]);
 
-        auth()->guard('technician')->login($technician);
         flashMessage('Success', 'Register as technician successfully', 'success');
-        return redirect()->route('technician.dashboard');
+        return redirect()->route('technician.login');
     }
 }

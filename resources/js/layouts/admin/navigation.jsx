@@ -50,7 +50,7 @@ export function Navigation() {
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
-                                    <Link href="">
+                                    <Link href={route('admin.profile.edit')}>
                                         <UserIcon className="mr-2 h-4 w-4" />
                                         Profile
                                     </Link>

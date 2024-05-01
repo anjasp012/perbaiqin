@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Events\MessageRead;
+use App\Events\NewChatMessage;
+use App\Events\NewChatMessageNoImage;
 use App\Http\Controllers\Controller;
 use App\Models\Consultation;
 use App\Models\ConsultationMessage;
@@ -20,9 +22,9 @@ class ConsultationController extends Controller
             ->where('status', 'paid')
             ->exists();
         if ($paidPayment) {
-            return redirect()->route('consultation.chat', $consultationId);
+            return redirect()->route('user.consultation.chat', $consultationId);
         }
-        return inertia('consultation/index', [
+        return inertia('user/consultation/index', [
             'consultation' => $consultation
         ]);
     }
@@ -32,24 +34,24 @@ class ConsultationController extends Controller
     {
         $technician = Technician::where('slug', $slug)->firstOrFail();
         $unfinishedConsultation = Consultation::where('technician_id', $technician->id)
+            ->where('user_id', Auth::id())
             ->where('status', '!=', 'completed')
             ->first();
-
         if ($unfinishedConsultation) {
             flashMessage('Consultation', 'Consultation with ' . $technician->name . ' not finished. Please finish the ongoing consultation.', 'warning');
-            return redirect()->route('consultation.index', $unfinishedConsultation->id);
+            return redirect()->route('user.consultation.index', $unfinishedConsultation->id);
         }
 
         // Buat konsultasi baru
         $consultation = new Consultation([
             'technician_id' => $technician->id,
             'user_id' => auth()->user()->id,
-            'status' => 'ongoing',
+            'status' => 'pending',
             'price' => $technician->price,
         ]);
         $consultation->save();
         flashMessage('Consultation', 'Consultation created. Please finish the administration.', 'success');
-        return redirect()->route('consultation.index', ['consultationId' => $consultation->id]);
+        return redirect()->route('user.consultation.index', ['consultationId' => $consultation->id]);
     }
 
     public function confirmationPayment($consultationId)
@@ -64,7 +66,7 @@ class ConsultationController extends Controller
         $consultation->status = 'ongoing';
         $payment->save();
         flashMessage('Payment', 'Payment successfully completed.', 'success');
-        return redirect()->route('consultation.chat', $consultationId);
+        return redirect()->route('user.consultation.chat', $consultationId);
     }
 
     public function chat($consultationId)
@@ -75,8 +77,8 @@ class ConsultationController extends Controller
             abort(403, 'Unauthorized');
         }
         // Ambil semua pesan konsultasi terkait
-       // dd($messages);
-        return inertia('consultation/chat', [
+        // dd($messages);
+        return inertia('user/consultation/chat', [
             'consultation' => $consultation,
         ]);
     }
@@ -87,14 +89,14 @@ class ConsultationController extends Controller
         $consultation = Consultation::with('technician')->findOrFail($consultationId);
         // Ambil semua pesan konsultasi terkait dengan pagination
         $messages = $consultation->messages()->with('user', 'technician', 'product')->orderBy('created_at', 'asc')->get();
-    
+
         return response()->json([
             'success' => true,
             'consultation' => $consultation,
             'messages' => $messages,
         ], 200, [], JSON_PRETTY_PRINT); // Menambahkan opsi JSON_PRETTY_PRINT
     }
-    
+
 
     public function markAsRead($id)
     {
@@ -106,8 +108,12 @@ class ConsultationController extends Controller
 
 
         return response()->json(
-            [   'success' => true,
-                'message' => 'Message marked as read'], 200);
+            [
+                'success' => true,
+                'message' => 'Message marked as read'
+            ],
+            200
+        );
     }
 
     public function send(Request $request, $consultationId)
@@ -133,7 +139,7 @@ class ConsultationController extends Controller
             $image->storeAs('messages', $image->hashName());
             $message->image  = $image->hashName() ?? null;
             $message->save();
-        }else{
+        } else {
             $message->image  = NULL;
             $message->save();
         }
@@ -141,7 +147,14 @@ class ConsultationController extends Controller
         if (isset($request->product_id)) {
             [$message->product_id = $request->product_id];
         }
-
+        broadcast(new NewChatMessage(
+            $message->id,
+            $consultationId,
+            $request->message,
+            $message->image,
+            $message->sender_type,
+            now()
+        ))->toOthers();
 
         // Mengirim respons JSON yang berisi pesan yang baru dibuat
         return response()->json([

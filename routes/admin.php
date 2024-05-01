@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SpecialistController;
 use App\Http\Controllers\Admin\TechnicianController;
 use App\Http\Controllers\Admin\UserController;
@@ -24,9 +25,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('specialists', SpecialistController::class);
         Route::post('technicians/specialists/{slug}', [TechnicianController::class, 'manageSpecialist'])->name('technicians.manage-specialists');
         Route::resource('technicians', TechnicianController::class);
+        Route::get('technicians/verified/{slug}', [TechnicianController::class, 'verified'])->name('technicians.verified');
         Route::resource('users', UserController::class);
         Route::resource('admins', AdminController::class);
         Route::resource('products', ProductController::class);
         Route::resource('vendors', VendorController::class);
+
+        Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 });

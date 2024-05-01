@@ -5,7 +5,7 @@ import { TechnicianLayout } from '@/layouts/technician/technician-layout';
 import { Header } from '@/components/header';
 import Search from '@/shared/search';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { formatDateTime } from '@/lib/utils';
 import useSwal from '@/hooks/useSwal';

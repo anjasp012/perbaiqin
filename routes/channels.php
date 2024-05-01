@@ -13,4 +13,4 @@ Broadcast::channel('consultation.{consultationId}', function ($user, $consultati
         return true;
     }
     return false;
-});
+}, ['guards' => ['web', 'technician']]);

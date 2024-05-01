@@ -61,7 +61,7 @@ class VideoController extends Controller
     {
         $video = Video::findOrFail($id);
         $request->validate([
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'captions' => 'required|string',
             // 'tags' => 'required|array',
             'file_video' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:10240', // Max 200MB

@@ -24,13 +24,6 @@ class ProfileController extends Controller
         $technician = Auth::guard('technician')->user();
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('technicians')->ignore($technician->id),
-            ],
             'password' => 'nullable|string|min:8|confirmed',
             'phone' => 'nullable|string|max:255',
             'price' => 'nullable|numeric|min:0',
@@ -38,7 +31,6 @@ class ProfileController extends Controller
         ]);
 
         $technician->name = $request->name;
-        $technician->email = $request->email;
         $technician->phone = $request->phone;
         $technician->price = $request->price;
 
@@ -59,6 +51,6 @@ class ProfileController extends Controller
 
         $technician->save();
 
-        return redirect()->route('technician.profile.edit')->with('success', 'Profile updated successfully.');
+        return redirect()->route('technician.dashboard')->with('success', 'Profile updated successfully.');
     }
 }

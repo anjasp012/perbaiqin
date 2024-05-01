@@ -190,4 +190,15 @@ class TechnicianController extends Controller
         flashMessage('Deleted', 'Technician deleted successfully.');
         return redirect()->route('admin.technicians.index');
     }
+    public function verified(string $slug)
+    {
+        // dd($slug);
+        $technician = Technician::where('slug', $slug)->firstOrFail();
+        $technician->update([
+            'email_verified_at' => now(),
+        ]);
+
+        flashMessage('Verified', 'Technician verified successfully', 'success');
+        return redirect()->route('admin.technicians.index');
+    }
 }

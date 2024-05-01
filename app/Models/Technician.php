@@ -11,7 +11,7 @@ class Technician extends Authenticatable
     use HasFactory;
     public $preventsLazyLoading = true;
     protected $guarded = ['id'];
-    
+
     public function consultations()
     {
         return $this->hasMany(Consultation::class);
@@ -64,6 +64,4 @@ class Technician extends Authenticatable
 
         return $initial;
     }
-
-
 }

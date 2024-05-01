@@ -9,16 +9,18 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Pagination from '@/shared/pagination';
 import { User as UserIcon } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { formatDateTime } from '@/lib/utils';
+import useSwal from '@/hooks/useSwal';
 
 const AppointmentIndex = ({ appointments }) => {
+    const { ask } = useSwal();
     return (
         <Container>
-            <Head title='Appointments'></Head>
+            <Head title="Appointments"></Head>
             <Header title={`Appointments`} subtitle={'Appointments request list'} />
-            <div className='mt-5'>
+            <div className="mt-5">
                 <div className="px-4 py-6 sm:px-6 lg:p-8">
                     <div className="mb-8 ">
                         <Search URL={route('technician.appointments.index')} />
@@ -57,11 +59,27 @@ const AppointmentIndex = ({ appointments }) => {
                                                 </div>
                                             </TableCell>
 
-                                            <TableCell><Badge>{appointment.status}</Badge></TableCell>
+                                            <TableCell>
+                                                <Badge>{appointment.status}</Badge>
+                                            </TableCell>
                                             <TableCell>{formatDateTime(appointment.created_at)}</TableCell>
                                             <TableCell>
                                                 <div className="flex gap-2">
-                                              
+                                                    <Button
+                                                        className="bg-green-500 hover:bg-green-600/90"
+                                                        size="sm"
+                                                        variant="default"
+                                                        onClick={() =>
+                                                            ask({
+                                                                url: route('technician.appointments.index'),
+                                                                method: 'delete',
+                                                                icon: 'warning',
+                                                                message: 'Are you sure you want to accept this Appointment?',
+                                                            })
+                                                        }
+                                                    >
+                                                        <span>Accept</span>
+                                                    </Button>
                                                     <Button
                                                         size="sm"
                                                         variant="destructive"
@@ -70,11 +88,11 @@ const AppointmentIndex = ({ appointments }) => {
                                                                 url: route('technician.appointments.index'),
                                                                 method: 'delete',
                                                                 icon: 'warning',
-                                                                message: 'Are you sure you want to delete this Product?',
+                                                                message: 'Are you sure you want to reject this Appointment?',
                                                             })
                                                         }
                                                     >
-                                                        <span>Change Status</span>
+                                                        <span>Reject</span>
                                                     </Button>
                                                 </div>
                                             </TableCell>
@@ -87,8 +105,6 @@ const AppointmentIndex = ({ appointments }) => {
                         </CardContent>
                     </Card>
                 </div>
-
-
             </div>
         </Container>
     );

@@ -37,7 +37,7 @@ export default function CheckoutIndex() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('checkout.checkoutNow'));
+        post(route('user.checkout.checkoutNow'));
     };
     return (
         <>

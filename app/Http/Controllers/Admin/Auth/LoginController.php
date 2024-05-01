@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+
     public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->only('email', 'password');
@@ -16,12 +17,15 @@ class LoginController extends Controller
             flashMessage('Login', 'Login berhasil', 'success');
             return redirect()->route('admin.dashboard');
         }
-        flashMessage('Warning','Mohon cek kembali kredensial anda', 'warning');
+        flashMessage('Warning', 'Mohon cek kembali kredensial anda', 'warning');
         return redirect()->back()->withInput($request->only('email'));
     }
 
     public function showLoginForm()
     {
+        if (Auth::guard('admin')->user() != null) {
+            return redirect('/admin/dashboard');
+        }
         return inertia('admin/auth/login');
     }
 

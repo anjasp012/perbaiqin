@@ -39,7 +39,7 @@ class NewChatMessage implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('consultation.' . $this->consultation_id);
+        return new PrivateChannel('consultation.' . $this->consultation_id);
     }
 
     public function broadcastAs()
@@ -49,7 +49,7 @@ class NewChatMessage implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        
+
         $data = [
             'id' => $this->id,
             'consultation_id' => $this->consultation_id,

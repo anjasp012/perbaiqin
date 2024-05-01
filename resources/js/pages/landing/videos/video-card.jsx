@@ -28,6 +28,7 @@ const VideoCard = ({ video }) => {
                         Play
                     </div> */}
                 </CardContent>
+                <CardFooter></CardFooter>
             </Card>
         </Link>
     );

@@ -77,6 +77,6 @@ class CheckoutController extends Controller
 
         Cart::with(['product.vendor'])->where('user_id', Auth::id())->delete();
         flashMessage('Success', 'Order created successfully', 'success');
-        return redirect()->route('transactions.index');
+        return redirect()->route('user.transactions.index');
     }
 }

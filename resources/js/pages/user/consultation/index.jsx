@@ -34,7 +34,7 @@ const ConsultationIndex = () => {
 
     const handleSubmit = () => {
         // Mengirim permintaan POST ke consultation.confirmation
-        post(route('consultation.confirmation', consultation.id));
+        post(route('user.consultation.confirmation', consultation.id));
     };
 
     return (

@@ -21,7 +21,7 @@ export default function ProductShow() {
             auth.technician != null ? router.post(`/technician/cart/${product.id}`) : '';
         }
         {
-            auth.user != null ? router.post(`/cart/${product.id}`) : '';
+            auth.user != null ? router.post(`/user/cart/${product.id}`) : '';
         }
     };
 

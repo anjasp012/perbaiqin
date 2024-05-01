@@ -55,7 +55,7 @@ export function Navigation() {
                                                 (auth.vendor && 'vendor.') ||
                                                 (auth.admin && 'admin.') ||
                                                 (auth.technician && 'technician.') ||
-                                                (auth.user && '')
+                                                (auth.user && 'user.')
                                             }dashboard`,
                                         )}
                                     >
@@ -66,13 +66,13 @@ export function Navigation() {
                                 {(auth.user && (
                                     <>
                                         <DropdownMenuItem asChild>
-                                            <Link href={route('cart.index')}>
+                                            <Link href={route('user.cart.index')}>
                                                 <ShoppingCartIcon className="mr-2 h-4 w-4" />
                                                 Cart
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href={route('transactions.index')}>
+                                            <Link href={route('user.transactions.index')}>
                                                 <History className="mr-2 h-4 w-4" />
                                                 Transaction History
                                             </Link>
@@ -96,7 +96,7 @@ export function Navigation() {
                                         </>
                                     ))}
                                 <DropdownMenuItem asChild>
-                                    <Link href={route('profile.edit')}>
+                                    <Link href={route('user.profile.edit')}>
                                         <Settings2Icon className="mr-2 h-4 w-4" />
                                         Settings
                                     </Link>

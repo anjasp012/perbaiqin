@@ -9,9 +9,10 @@ import { Sheet, SheetContent, SheetHeader } from '@/components/ui/sheet';
 import { ApplicationLogo } from '@/components/application-logo';
 
 import { User as UserIcon } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardHeader } from '@/components/ui/card';
-const navLinkClasses = 'text-sm items-center font-medium tracking-tight text-muted-foreground hover:text-foreground inline-flex px-2 py-3 transition-colors duration-300';
+const navLinkClasses =
+    'text-sm items-center font-medium tracking-tight text-muted-foreground hover:text-foreground inline-flex px-2 py-3 transition-colors duration-300';
 
 export function ChatNav({ consultation }) {
     const { auth } = usePage().props;
@@ -23,25 +24,16 @@ export function ChatNav({ consultation }) {
     }, []);
     return (
         <>
-
-            <nav >
+            <nav>
                 <div className=" flex w-full items-center justify-between border-b px-4 py-3 shadow-sm backdrop-blur-lg">
                     <Avatar className="flex items-center">
-                        <AvatarImage
-                            src={consultation.technician.image}
-                            alt={consultation.technician.name}
-                            className="h-6 w-6 rounded-full border-2"
-                        />
+                        <AvatarImage src={consultation.technician.image} alt={consultation.technician.name} className="h-6 w-6 rounded-full border-2" />
                         <AvatarFallback>
                             <UserIcon />
                         </AvatarFallback>
-
                     </Avatar>
                     <div>
-
-                        <h2 className="text-lg font-semibold ml-2">
-                            {consultation.technician.name}
-                        </h2>
+                        <h2 className="ml-2 text-lg font-semibold">{consultation.technician.name}</h2>
                     </div>
                     <div>
                         <ThemeSwitcher />
@@ -52,34 +44,24 @@ export function ChatNav({ consultation }) {
                 </div>
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetContent side="right">
-                        <Link href="/" className="mr-4 mb-4 flex items-center">
+                        <Link href="/" className="mb-4 mr-4 flex items-center">
                             <ApplicationLogo className="me-2 h-6 w-6" />
                             <h2 className="text-xl font-bold"> PerbaiQin</h2>
                         </Link>
-                        <div className="mt-3 mb-3">
-
+                        <div className="mb-3 mt-3">
                             <Card>
                                 <CardHeader>
                                     <Avatar className="flex items-center">
-                                        <AvatarImage
-                                            src={auth.user.avatar}
-                                            alt={auth.user.name}
-                                            className="h-6 w-6 rounded-full border-2"
-                                        />
+                                        <AvatarImage src={auth.user.avatar} alt={auth.user.name} className="h-6 w-6 rounded-full border-2" />
                                         <AvatarFallback>
                                             <UserIcon />
                                         </AvatarFallback>
-
                                     </Avatar>
                                     <div>
-
-                                        <h2 className="text-lg font-semibold ml-2">
-                                            {auth.user.name}
-                                        </h2>
+                                        <h2 className="ml-2 text-lg font-semibold">{auth.user.name}</h2>
                                     </div>
                                 </CardHeader>
                             </Card>
-
                         </div>
                         <div className="-mx-2 space-y-2">
                             {navLinks.map((navLink, index) => (
@@ -96,15 +78,18 @@ export function ChatNav({ consultation }) {
 }
 
 const navLinks = [
-    { label: 'Dashboard', route: 'dashboard' },
-    { label: 'History', route: 'vendor.products.index' },
-    { label: 'Appointments', route: 'vendor.products.index' },
+    { label: 'Dashboard', route: 'user.dashboard' },
+    // { label: 'History', route: 'vendor.products.index' },
+    { label: 'Appointments', route: 'user.appointments.index' },
 ];
 
 export function NavLink({ active, children, href }) {
-    return <Link className={cn(navLinkClasses, active && 'font-semibold text-foreground')} href={href}>{children}</Link>;
+    return (
+        <Link className={cn(navLinkClasses, active && 'font-semibold text-foreground')} href={href}>
+            {children}
+        </Link>
+    );
 }
-
 
 export function NavLinkResponsive({ active, children, href }) {
     return (

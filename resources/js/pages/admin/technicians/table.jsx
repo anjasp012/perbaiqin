@@ -16,6 +16,7 @@ export default function TechnicianTable({ technicians, handleTechnicianDelete })
                     <TableHead>Name</TableHead>
                     <TableHead>Email</TableHead>
                     <TableHead>Created</TableHead>
+                    <TableHead>Verified</TableHead>
                     <TableHead>Actions</TableHead>
                 </TableRow>
             </TableHeader>
@@ -34,10 +35,33 @@ export default function TechnicianTable({ technicians, handleTechnicianDelete })
                         <TableCell>{technician.email}</TableCell>
                         <TableCell>{formatDate(technician.created_at)}</TableCell>
                         <TableCell>
-                            <Link href={route('admin.technicians.show', technician.slug)} className={buttonVariants({ variant: 'default', size:'sm'}) + ' me-2'}>
+                            {technician.email_verified_at == null ? (
+                                <span className="text-red-500">Not Verified</span>
+                            ) : (
+                                <span className="text-green-500">Verified</span>
+                            )}
+                        </TableCell>
+                        <TableCell>
+                            {technician.email_verified_at == null ? (
+                                <Link
+                                    href={route('admin.technicians.verified', technician.slug)}
+                                    className={buttonVariants({ variant: 'default', size: 'sm' }) + ' me-2 bg-green-500 hover:bg-green-600/90'}
+                                >
+                                    Verified Now
+                                </Link>
+                            ) : (
+                                ''
+                            )}
+                            <Link
+                                href={route('admin.technicians.show', technician.slug)}
+                                className={buttonVariants({ variant: 'default', size: 'sm' }) + ' me-2'}
+                            >
                                 View
                             </Link>
-                            <Link href={route('admin.technicians.edit', technician.slug)} className={buttonVariants({ variant: 'default' , size:'sm'}) + ' me-2'}>
+                            <Link
+                                href={route('admin.technicians.edit', technician.slug)}
+                                className={buttonVariants({ variant: 'default', size: 'sm' }) + ' me-2'}
+                            >
                                 Edit
                             </Link>
                             <Button onClick={() => handleTechnicianDelete(technician.slug)} size="sm" variant="destructive">

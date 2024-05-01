@@ -7,16 +7,17 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { AuthLayout } from '@/layouts/auth-layout';
 
-export default function TechnicianRegister({ }) {
+export default function TechnicianRegister({}) {
     //state user
-    
+
     const { errors, processing } = usePage().props;
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordConfirmation, setPasswordConfirmation] = useState("");
-    const [agree, setAgree] = useState("");
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const [agree, setAgree] = useState('');
     //function "registerHandler"
     const registerHandler = async (e) => {
         e.preventDefault();
@@ -24,13 +25,14 @@ export default function TechnicianRegister({ }) {
         //register
         router.post(route('technician.register.store'), {
             name: name,
+            price: price,
             email: email,
             phone: phone,
             password: password,
             password_confirmation: passwordConfirmation,
             agree: agree,
         });
-    }
+    };
 
     return (
         <AuthLayout>
@@ -122,11 +124,8 @@ export default function TechnicianRegister({ }) {
                                                             autoComplete="current-password"
                                                             onChange={(e) => setPassword(e.target.value)}
                                                         />
-                                                        {errors.password && (
-                                                           <InputError message={errors.password} className="mt-2" />
-                                                        )}
+                                                        {errors.password && <InputError message={errors.password} className="mt-2" />}
                                                     </div>
-
                                                     <div className="grid gap-1">
                                                         <Label htmlFor="password_confirmation">Password Confirmation</Label>
 
@@ -140,18 +139,30 @@ export default function TechnicianRegister({ }) {
                                                             onChange={(e) => setPasswordConfirmation(e.target.value)}
                                                         />
 
-                                                        {errors.passwordConfirmation && (
-                                                          <InputError message={errors.passwordConfirmation} className="mt-2" />
-                                                        )}
+                                                        {errors.passwordConfirmation && <InputError message={errors.passwordConfirmation} className="mt-2" />}
                                                     </div>
+                                                    <div className="grid gap-1">
+                                                        <Label htmlFor="price">Price</Label>
+                                                        <Input
+                                                            id="price"
+                                                            type="text"
+                                                            name="price"
+                                                            value={price}
+                                                            className="mt-1 block w-full"
+                                                            autoComplete="price"
+                                                            autoFocus
+                                                            onChange={(e) => setPrice(e.target.value)}
+                                                        />
+
+                                                        <InputError message={errors.price} className="mt-2" />
+                                                    </div>
+
                                                     <div className="mt-2 flex items-center justify-between">
                                                         <label className="flex items-center">
                                                             <Checkbox defaultChecked={false} name="agree" onCheckedChange={(e) => setAgree(e)} />
                                                             <span className="ml-2 select-none text-sm text-muted-foreground">Agree with terms</span>
                                                         </label>
-                                                        {errors.agree && (
-                                                          <InputError message={errors.agree} className="mt-2" />
-                                                        )}
+                                                        {errors.agree && <InputError message={errors.agree} className="mt-2" />}
                                                     </div>
                                                     <div className="mt-2 gap-x-2">
                                                         <Button className="w-full" disabled={processing} type="submit">

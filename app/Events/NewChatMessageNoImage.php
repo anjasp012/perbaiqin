@@ -35,7 +35,7 @@ class NewChatMessageNoImage implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('consultation.' . $this->consultation_id);
+        return new PrivateChannel('consultation.' . $this->consultation_id);
     }
 
     public function broadcastAs()

@@ -43,19 +43,19 @@ export function Navigation() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-60">
                                 <DropdownMenuItem asChild>
-                                    <Link href={route('dashboard')}>
+                                    <Link href={route('user.dashboard')}>
                                         <GaugeIcon className="mr-2 h-4 w-4" />
                                         Dashboard
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
-                                    <Link href={route('cart.index')}>
+                                    <Link href={route('user.cart.index')}>
                                         <ShoppingCartIcon className="mr-2 h-4 w-4" />
                                         Cart
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
-                                    <Link href={route('profile.edit')}>
+                                    <Link href={route('user.profile.edit')}>
                                         <Settings2Icon className="mr-2 h-4 w-4" />
                                         Settings
                                     </Link>
@@ -109,6 +109,36 @@ export function Navigation() {
                                     {navLink.label}
                                 </NavLinkResponsive>
                             ))}
+                            <DropdownMenu>
+                                <DropdownMenuTrigger className={cn(buttonVariants({ size: 'sm' }), 'w-full justify-start tracking-tighter')}>
+                                    {auth.user.name}{' '}
+                                    <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="w-56">
+                                    <DropdownMenuItem asChild>
+                                        <Link href={route('user.dashboard')}>
+                                            <GaugeIcon className="mr-2 h-4 w-4" />
+                                            Dashboard
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <Link href={route('user.cart.index')}>
+                                            <ShoppingCartIcon className="mr-2 h-4 w-4" />
+                                            Cart
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <Link href={route('user.profile.edit')}>
+                                            <Settings2Icon className="mr-2 h-4 w-4" />
+                                            Settings
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onSelect={() => router.post(route('logout'))}>
+                                        <PowerIcon className="mr-2 h-4 w-4" />
+                                        Log out
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         </div>
                     </SheetContent>
                 </Sheet>
@@ -118,9 +148,9 @@ export function Navigation() {
 }
 
 const navLinks = [
-    { label: 'Dashboard', route: 'dashboard' },
-    // { label: 'Appointments', route: 'vendor.products.index' },
-    { label: 'Transaction History', route: 'transactions.index' },
+    { label: 'Dashboard', route: 'user.dashboard' },
+    { label: 'Appointments History', route: 'user.appointments.index' },
+    { label: 'Transaction History', route: 'user.transactions.index' },
 ];
 
 export function NavLink({ active, children, href }) {
