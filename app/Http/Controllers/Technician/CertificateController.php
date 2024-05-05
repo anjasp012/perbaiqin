@@ -101,7 +101,7 @@ class CertificateController extends Controller
         if ($certificate->technician_id !== $technician->id) {
             abort(403); // Tampilkan halaman larangan akses jika bukan pemilik sertifikat
         }
-        
+
         // Hapus sertifikat dari penyimpanan
         Storage::disk('public')->delete($certificate->certificate);
 

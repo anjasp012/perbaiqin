@@ -4,6 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Collaboration;
+use App\Models\TCollaboration;
+use App\Models\TCollaborationDetail;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
@@ -77,6 +80,53 @@ class CheckoutController extends Controller
 
         Cart::with(['product.vendor'])->where('user_id', Auth::id())->delete();
         flashMessage('Success', 'Order created successfully', 'success');
+        return redirect()->route('user.transactions.index');
+    }
+
+    public function checkoutCollaboration(Request $request, $id)
+    {
+        $collaboration = Collaboration::with('technician')->where('id', $id)->firstOrFail();
+        $subTotal = $collaboration->price;
+        return inertia('user/checkout-collaboration/index', [
+            'collaboration' => $collaboration,
+            'subTotal' => $subTotal
+        ]);
+    }
+    public function checkoutCollaborationNow(Request $request, $id)
+    {
+        $collaboration = Collaboration::with('technician')->where('id', $id)->firstOrFail();
+
+        $request->validate([
+            'buyer_name' => 'required',
+            'buyer_phone' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'province' => 'required',
+            'postal_code' => 'required',
+            'payment_method' => 'required',
+        ]);
+        $transactions = TCollaboration::create([
+            'user_id' => Auth::id(),
+            'no_transaction_collaboration' => 'PQC-' . rand(10000, 99999),
+            'buyer_name' => $request->buyer_name,
+            'buyer_phone' => $request->buyer_phone,
+            'address' => $request->address,
+            'city' => $request->city,
+            'province' => $request->province,
+            'postal_code' => $request->postal_code,
+            'payment_method' => $request->payment_method,
+            'technician_id' => $collaboration->technician_id,
+            'total_price' => $collaboration->price,
+            'transaction_collaboration_status' => 'PROCESS',
+        ]);
+        TCollaborationDetail::create([
+            't_collaboration_id' => $transactions->id,
+            'collaboration_id' => $collaboration->id,
+            'collaboration_name' => $collaboration->name,
+            'collaboration_price' => $collaboration->price,
+        ]);
+
+        flashMessage('Success', 'Collaboration Order created successfully', 'success');
         return redirect()->route('user.transactions.index');
     }
 }

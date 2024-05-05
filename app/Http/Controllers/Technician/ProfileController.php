@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Technician;
 
 use App\Http\Controllers\Controller;
+use App\Models\Specialist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,8 +15,11 @@ class ProfileController extends Controller
     public function edit()
     {
         $technician = Auth::guard('technician')->user();
+
+        $specialists = Specialist::all();
         return inertia('technician/profile/edit', [
             'technician' => $technician,
+            'specialists' => $specialists,
         ]);
     }
 
@@ -48,6 +52,10 @@ class ProfileController extends Controller
             // Store new image
             $technician->image = $request->file('image')->store('technician_images', 'public');
         }
+
+        $selectedSpecialists = $request->input('specialist_ids', []);
+        // Sinkronisasi spesialisasi teknisi dengan spesialisasi yang dipilih oleh pengguna
+        $technician->specialists()->sync($selectedSpecialists);
 
         $technician->save();
 

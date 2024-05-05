@@ -61,8 +61,19 @@ class VendorController extends Controller
     public function show($id)
     {
         $vendor = Vendor::where('id', $id)->firstOrFail();
+        // dd($vendor);
         return inertia(
             'admin/vendors/show',
+            [
+                'vendor' => $vendor,
+            ]
+        );
+    }
+    public function edit($id)
+    {
+        $vendor = Vendor::where('id', $id)->firstOrFail();
+        return inertia(
+            'admin/vendors/edit',
             [
                 'vendor' => $vendor,
             ]

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Landing\AppointmentController;
 use App\Http\Controllers\Landing\AskTechnicianController;
+use App\Http\Controllers\landing\CollaborationController;
 use App\Http\Controllers\Landing\ConsultationController;
 use App\Http\Controllers\Landing\HomeController;
 use App\Http\Controllers\Landing\ProductController;
@@ -27,6 +28,9 @@ Route::post('/appointments/make/{id}', [AppointmentController::class, 'makeAppoi
 
 Route::get('/products', [ProductController::class, 'index'])->name('landing.products.index');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('landing.products.show');
+
+Route::get('/collaborations', [CollaborationController::class, 'index'])->name('landing.collaborations.index');
+Route::get('/collaborations/{slug}', [CollaborationController::class, 'show'])->name('landing.collaborations.show');
 
 Route::get('/videos', [VideoController::class, 'index'])->name('landing.videos.index');
 Route::get('/videos/{id}', [VideoController::class, 'show'])->name('landing.videos.show');

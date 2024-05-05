@@ -1,6 +1,6 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Link, router, usePage } from '@inertiajs/react';
-import { ChevronDown, GaugeIcon, Wrench, PowerIcon, HomeIcon, MenuIcon, User as UserIcon, ShoppingCartIcon } from 'lucide-react';
+import { ChevronDown, GaugeIcon, Wrench, PowerIcon, HomeIcon, MenuIcon, User as UserIcon, ShoppingCartIcon, History } from 'lucide-react';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -54,6 +54,12 @@ export function Navigation() {
                                     <Link href={route('technician.cart.index')}>
                                         <ShoppingCartIcon className="mr-2 h-4 w-4" />
                                         Cart
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href={route('technician.transactions.index')}>
+                                        <History className="mr-2 h-4 w-4" />
+                                        My Transaction
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
@@ -121,11 +127,12 @@ export function Navigation() {
 
 const navLinks = [
     { label: 'Dashboard', route: 'technician.dashboard' },
+    { label: 'Collaboration Fix Up', route: 'technician.collaborations.index' },
     { label: 'Consultations', route: 'technician.consultations.index' },
     { label: 'Appointments', route: 'technician.appointments.index' },
     { label: 'Certificates', route: 'technician.certificates.index' },
     { label: 'Videos', route: 'technician.videos.index' },
-    { label: 'Transaction History', route: 'technician.transactions.index' },
+    { label: 'Collaboration Orders', route: 'technician.collaboration-orders.index' },
 ];
 
 const dropdownLinks = [{}];

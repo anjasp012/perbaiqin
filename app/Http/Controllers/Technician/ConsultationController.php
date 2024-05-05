@@ -105,12 +105,12 @@ class ConsultationController extends Controller
     }
 
 
-    public function completed($consultationId)
+    public function update(Request $request, $id)
     {
-        $consultation = Consultation::findOrFail($consultationId);
-        $consultation->status = 'completed';
+        $consultation = Consultation::findOrFail($id);
+        $consultation->status = $request->status;
         $consultation->save();
-        flashMessage('Success', 'Consultation marked as Completed');
+        flashMessage('Success', 'Consultation marked as ' . $consultation->status);
         return redirect()->back();
     }
 

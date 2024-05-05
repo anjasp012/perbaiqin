@@ -15,7 +15,10 @@ class VideoController extends Controller
     public function index()
     {
         $technician = Auth::guard('technician')->user();
-        $videos = Video::where('technician_id', $technician->id)->latest()->paginate(10);
+        $videos = Video::where('technician_id', $technician->id)->when(request()->q, function ($videos) {
+            $videos = $videos->where('captions', 'like', '%' . request()->q . '%');
+        })->latest()->paginate(12);
+        $videos->appends(['q' => request()->q]);
         return inertia('technician/videos/index', ['videos' => $videos]);
     }
 

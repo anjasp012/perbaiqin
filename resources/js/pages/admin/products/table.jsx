@@ -42,11 +42,8 @@ export default function VendorTable({ products }) {
                         <TableCell>{product.vendor.name}</TableCell>
                         <TableCell>{formatDate(product.created_at)}</TableCell>
                         <TableCell>
-                            <Link href={route('admin.products.show', product.id)} className={buttonVariants({ variant: 'default', size: 'sm' }) + ' me-2'}>
+                            <Link href={route('landing.products.show', product.slug)} className={buttonVariants({ variant: 'default', size: 'sm' }) + ' me-2'}>
                                 View
-                            </Link>
-                            <Link href={route('admin.products.edit', product.id)} className={buttonVariants({ variant: 'default', size: 'sm' }) + ' me-2'}>
-                                Edit
                             </Link>
                             <Button
                                 size="sm"

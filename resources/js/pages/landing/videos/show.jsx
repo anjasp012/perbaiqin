@@ -32,7 +32,7 @@ export default function ProductShow() {
                             <div className="md:col-span-12">
                                 <div className="grid gap-y-2 py-0 lg:grid-cols-12 lg:gap-16 lg:py-10">
                                     <div className="-mx-4 -mt-4 md:col-span-9 md:mx-0 lg:mt-0">
-                                        <video className="mb-4 aspect-video rounded-lg" controls>
+                                        <video className="mb-4 aspect-video w-full rounded-lg" controls>
                                             <source src={`/storage/${video.file_video}`} type="video/mp4" />
                                         </video>
                                         <h1 className="mb-4 text-3xl font-bold">{video.captions}</h1>

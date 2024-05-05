@@ -8,8 +8,8 @@ export function Select({ options, placeholder = 'Select an options', ...props })
             </SelectTrigger>
             <SelectContent>
                 {options.map((option, index) => (
-                    <SelectItem key={index} value={option.name}>
-                        {option.name}
+                    <SelectItem key={index} value={option.value}>
+                        {option.label}
                     </SelectItem>
                 ))}
             </SelectContent>

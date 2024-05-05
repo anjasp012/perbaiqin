@@ -18,7 +18,12 @@ class Product extends Model
         return $this->belongsTo(Vendor::class);
     }
 
-   
+    public function rateReview()
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
+
     public function getImageAttribute($image)
     {
         return asset('storage/' . $image);

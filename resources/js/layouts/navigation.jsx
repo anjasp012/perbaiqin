@@ -63,45 +63,42 @@ export function Navigation() {
                                         Dashboard
                                     </Link>
                                 </DropdownMenuItem>
-                                {(auth.user && (
+                                {(auth.user || auth.technician) && (
                                     <>
                                         <DropdownMenuItem asChild>
-                                            <Link href={route('user.cart.index')}>
+                                            <Link href={route((auth.technician && 'technician.cart.index') || (auth.user && 'user.cart.index'))}>
                                                 <ShoppingCartIcon className="mr-2 h-4 w-4" />
                                                 Cart
                                             </Link>
                                         </DropdownMenuItem>
-                                        <DropdownMenuItem asChild>
-                                            <Link href={route('user.transactions.index')}>
-                                                <History className="mr-2 h-4 w-4" />
-                                                Transaction History
-                                            </Link>
-                                        </DropdownMenuItem>
                                     </>
-                                )) ||
-                                    (auth.technician && (
-                                        <>
-                                            <DropdownMenuItem asChild>
-                                                <Link href={route('technician.cart.index')}>
-                                                    <ShoppingCartIcon className="mr-2 h-4 w-4" />
-                                                    Cart
-                                                </Link>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem asChild>
-                                                <Link href={route('technician.transactions.index')}>
-                                                    <History className="mr-2 h-4 w-4" />
-                                                    Transaction History
-                                                </Link>
-                                            </DropdownMenuItem>
-                                        </>
-                                    ))}
+                                )}
+
                                 <DropdownMenuItem asChild>
-                                    <Link href={route('user.profile.edit')}>
+                                    <Link
+                                        href={route(
+                                            (auth.technician && 'technician.profile.edit') ||
+                                                (auth.vendor && 'vendor.profile.edit') ||
+                                                (auth.user && 'user.profile.edit') ||
+                                                (auth.admin && 'admin.profile.edit'),
+                                        )}
+                                    >
                                         <Settings2Icon className="mr-2 h-4 w-4" />
                                         Settings
                                     </Link>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onSelect={() => router.post(route('logout'))}>
+                                <DropdownMenuItem
+                                    onSelect={() =>
+                                        router.post(
+                                            route(
+                                                (auth.technician && 'technician.logout') ||
+                                                    (auth.vendor && 'vendor.logout') ||
+                                                    (auth.user && 'logout') ||
+                                                    (auth.admin && 'admin.logout'),
+                                            ),
+                                        )
+                                    }
+                                >
                                     <PowerIcon className="mr-2 h-4 w-4" />
                                     Log out
                                 </DropdownMenuItem>

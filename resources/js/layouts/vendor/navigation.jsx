@@ -23,7 +23,7 @@ export function Navigation() {
         <>
             <nav className="relative z-10 mx-auto hidden max-w-screen-2xl items-center justify-between border-b px-4 py-2.5 sm:flex sm:px-6">
                 <div className="flex items-center">
-                    <Link href={route('vendor.dashboard')} className="mr-4 flex justify-between font-bold">
+                    <Link href={route('home')} className="mr-4 flex justify-between font-bold">
                         <ApplicationLogo className="me-2 h-6 w-6" /> <h2>PerbaiQin</h2>
                     </Link>
                     {navLinks.map((navLink, index) => (
@@ -49,7 +49,7 @@ export function Navigation() {
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
-                                    <Link href={route('profile.edit')}>
+                                    <Link href={route('vendor.profile.edit')}>
                                         <Settings2Icon className="mr-2 h-4 w-4" />
                                         Settings
                                     </Link>

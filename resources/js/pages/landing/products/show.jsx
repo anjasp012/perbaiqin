@@ -9,9 +9,10 @@ import Breadcrumb from '@/components/breadcrumb';
 import { formatRupiah } from '@/lib/utils';
 import ProductCard from './product-card';
 import { Image } from '@/components/image';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 
 export default function ProductShow() {
-    const { auth, products, product } = usePage().props;
+    const { auth, products, product, reviews } = usePage().props;
 
     console.log(product);
 
@@ -84,6 +85,23 @@ export default function ProductShow() {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="mt-10">
+                            <h3 className="mb-6 text-xl font-semibold leading-none tracking-tight">Reviews</h3>
+                            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                                {reviews.map((review, index) => (
+                                    <Card key={index}>
+                                        <CardHeader>
+                                            {Array.from({ length: review.rate }, (_, starIndex) => (
+                                                <span className="contents" key={starIndex}>
+                                                    ⭐
+                                                </span>
+                                            ))}
+                                        </CardHeader>
+                                        <CardContent>{review.review}</CardContent>
+                                    </Card>
+                                ))}
                             </div>
                         </div>
                         <div className="mt-10">

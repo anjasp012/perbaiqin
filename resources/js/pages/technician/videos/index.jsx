@@ -20,10 +20,10 @@ const VideoIndex = ({ videos }) => {
             <div className="mt-5">
                 <div className="px-4 py-6 sm:px-6 lg:p-8">
                     <div className="mb-8 flex items-center justify-between">
+                        <Search URL={route('technician.videos.index')} />
                         <Link href={route('technician.videos.create')} className={buttonVariants({ variant: 'default' })}>
                             Upload New Videos
                         </Link>
-                        <Search URL={route('technician.videos.index')} />
                     </div>
 
                     <div className={`grid grid-cols-4 gap-3`}>

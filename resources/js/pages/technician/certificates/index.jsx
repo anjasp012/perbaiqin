@@ -9,24 +9,24 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Pagination from '@/shared/pagination';
 import { User as UserIcon } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { formatDateTime } from '@/lib/utils';
+import useSwal from '@/hooks/useSwal';
 
 const CertificateIndex = ({ certificates }) => {
+    const { ask } = useSwal();
     return (
         <Container>
-            <Head title='Certificates'></Head>
+            <Head title="Certificates"></Head>
             <Header title={`Technician Certificates`} subtitle={'Certificates'} />
-            <div className='mt-5'>
+            <div className="mt-5">
                 <div className="px-4 py-6 sm:px-6 lg:p-8">
-                    <div className="mb-8 ">
+                    <div className="mb-8 flex items-center justify-between">
+                        <Search URL={route('technician.certificates.index')} />
                         <Link href={route('technician.certificates.create')}>
                             <Button variant="default">Upload New Certificates</Button>
                         </Link>
-                    </div>
-                    <div className=" gap-2">
-                        <Search URL={route('technician.certificates.index')} />
                     </div>
                     <Card className="border-none">
                         <CardHeader></CardHeader>
@@ -45,12 +45,14 @@ const CertificateIndex = ({ certificates }) => {
                                         <TableRow key={index}>
                                             <TableCell>{++index + (certificates.current_page - 1) * certificates.per_page}</TableCell>
 
-
                                             <TableCell>{certificate.name}</TableCell>
                                             <TableCell>{formatDateTime(certificate.created_at)}</TableCell>
                                             <TableCell>
                                                 <div className="flex gap-2">
-                                                    <Link href={route('technician.certificates.chat', certificate.id)} className={buttonVariants({ variant: 'secondary' })}>
+                                                    <Link
+                                                        href={route('technician.certificates.show', certificate.id)}
+                                                        className={buttonVariants({ variant: 'secondary' })}
+                                                    >
                                                         View
                                                     </Link>
                                                     <Button
@@ -58,7 +60,7 @@ const CertificateIndex = ({ certificates }) => {
                                                         variant="destructive"
                                                         onClick={() =>
                                                             ask({
-                                                                url: route('technician.certificates.index'),
+                                                                url: route('technician.certificates.destroy', certificate.id),
                                                                 method: 'delete',
                                                                 icon: 'warning',
                                                                 message: 'Are you sure you want to delete this Product?',
@@ -78,8 +80,6 @@ const CertificateIndex = ({ certificates }) => {
                         </CardContent>
                     </Card>
                 </div>
-
-
             </div>
         </Container>
     );

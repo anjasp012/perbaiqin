@@ -26,9 +26,22 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::with(['transaction_details.product.vendor'])->where('no_transaction', $no_transaction)->first();
         $transaction_details = $transaction->transaction_details;
+        $totalPrice = $transaction_details->sum(function ($details) {
+            return $details->product->price * $details->quantity;
+        });
         return inertia('user/transactions/show', [
             'transaction' => $transaction,
             'transaction_details' => $transaction_details,
+            'totalPrice' => $totalPrice,
         ]);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        $transaction->update([
+            'transaction_status' => $request->transaction_status
+        ]);
+        flashMessage('success', 'Transaction updated successfully', 'success');
     }
 }

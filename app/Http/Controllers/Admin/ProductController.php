@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     public function index()
-    { 
+    {
         $products = Product::with('vendor')->when(request()->q, function ($products) {
             $products = $products->where('name', 'like', '%' . request()->q . '%');
         })->latest()->paginate(10);
@@ -72,11 +72,11 @@ class ProductController extends Controller
         return redirect()->route('vendor.products.index');
     }
 
-    public function destroy($slug)
+    public function destroy($id)
     {
-        $product = Product::where('slug', $slug)->firstOrFail();
+        $product = Product::findOrFail($id);
         $product->delete();
         flashMessage('success', 'Product deleted successfully.');
-        return redirect()->route('vendor.products.index');
+        return redirect()->route('admin.products.index');
     }
 }

@@ -8,12 +8,15 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Pagination from '@/shared/pagination';
-import { User as UserIcon } from 'lucide-react';
+import { ChevronDown, User as UserIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { formatDateTime } from '@/lib/utils';
+import { cn, formatDateTime } from '@/lib/utils';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import useSwal from '@/hooks/useSwal';
 
 const TechnicianConsultationIndex = ({ consultations }) => {
+    const { ask } = useSwal();
     return (
         <Container>
             <Head title="Consultation"></Head>
@@ -71,20 +74,59 @@ const TechnicianConsultationIndex = ({ consultations }) => {
                                                             Go to Chat
                                                         </Link>
                                                     )}
-                                                    <Button
-                                                        size="sm"
-                                                        variant="destructive"
-                                                        onClick={() =>
-                                                            ask({
-                                                                url: route('technician.consultations.index'),
-                                                                method: 'delete',
-                                                                icon: 'warning',
-                                                                message: 'Are you sure you want to change to completed?',
-                                                            })
-                                                        }
-                                                    >
-                                                        <span>Change Status</span>
-                                                    </Button>
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger className={cn(buttonVariants({ size: 'sm' }), 'tracking-tighter')}>
+                                                            Action
+                                                            <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent align="end" className="w-40">
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    onClick={() =>
+                                                                        ask({
+                                                                            url: route('technician.consultations.update', consultation.id),
+                                                                            method: 'put',
+                                                                            icon: 'warning',
+                                                                            data: { status: 'pending' },
+                                                                            message: 'Are you sure you want to Pending this Consultation?',
+                                                                        })
+                                                                    }
+                                                                >
+                                                                    Pending
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    onClick={() =>
+                                                                        ask({
+                                                                            url: route('technician.consultations.update', consultation.id),
+                                                                            method: 'put',
+                                                                            icon: 'warning',
+                                                                            data: { status: 'Ongoing' },
+                                                                            message: 'Are you sure you want to Ongoing this Consultation?',
+                                                                        })
+                                                                    }
+                                                                >
+                                                                    Ongoing
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    onClick={() =>
+                                                                        ask({
+                                                                            url: route('technician.consultations.update', consultation.id),
+                                                                            method: 'put',
+                                                                            icon: 'warning',
+                                                                            data: { status: 'completed' },
+                                                                            message: 'Are you sure you want to Completed this Consultation?',
+                                                                        })
+                                                                    }
+                                                                >
+                                                                    Complete
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
                                                 </div>
                                             </TableCell>
                                         </TableRow>

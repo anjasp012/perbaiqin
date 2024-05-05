@@ -8,11 +8,12 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Pagination from '@/shared/pagination';
-import { User as UserIcon } from 'lucide-react';
+import { ChevronDown, User as UserIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { formatDateTime } from '@/lib/utils';
+import { cn, formatDateTime } from '@/lib/utils';
 import useSwal from '@/hooks/useSwal';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 const AppointmentIndex = ({ appointments }) => {
     const { ask } = useSwal();
@@ -65,21 +66,121 @@ const AppointmentIndex = ({ appointments }) => {
                                             <TableCell>{formatDateTime(appointment.created_at)}</TableCell>
                                             <TableCell>
                                                 <div className="flex gap-2">
-                                                    <Button
-                                                        className="bg-green-500 hover:bg-green-600/90"
-                                                        size="sm"
-                                                        variant="default"
-                                                        onClick={() =>
-                                                            ask({
-                                                                url: route('technician.appointments.index'),
-                                                                method: 'delete',
-                                                                icon: 'warning',
-                                                                message: 'Are you sure you want to accept this Appointment?',
-                                                            })
-                                                        }
-                                                    >
-                                                        <span>Accept</span>
-                                                    </Button>
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger className={cn(buttonVariants({ size: 'sm' }), 'tracking-tighter')}>
+                                                            Action
+                                                            <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent align="end" className="w-40">
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    onClick={() =>
+                                                                        ask({
+                                                                            url: route('technician.appointments.update', appointment.id),
+                                                                            method: 'put',
+                                                                            icon: 'warning',
+                                                                            data: { status: 'pending' },
+                                                                            message: 'Are you sure you want to Pending this Appointment?',
+                                                                        })
+                                                                    }
+                                                                >
+                                                                    Pending
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    onClick={() =>
+                                                                        ask({
+                                                                            url: route('technician.appointments.update', appointment.id),
+                                                                            method: 'put',
+                                                                            icon: 'warning',
+                                                                            data: { status: 'accepted' },
+                                                                            message: 'Are you sure you want to Accept this Appointment?',
+                                                                        })
+                                                                    }
+                                                                >
+                                                                    Accept
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    onClick={() =>
+                                                                        ask({
+                                                                            url: route('technician.appointments.update', appointment.id),
+                                                                            method: 'put',
+                                                                            icon: 'warning',
+                                                                            data: { status: 'rejected' },
+                                                                            message: 'Are you sure you want to Reject this Appointment?',
+                                                                        })
+                                                                    }
+                                                                >
+                                                                    Reject
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    onClick={() =>
+                                                                        ask({
+                                                                            url: route('technician.appointments.update', appointment.id),
+                                                                            method: 'put',
+                                                                            icon: 'warning',
+                                                                            data: { status: 'canceled' },
+                                                                            message: 'Are you sure you want to Cancel this Appointment?',
+                                                                        })
+                                                                    }
+                                                                >
+                                                                    Cancel
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem asChild>
+                                                                <Link
+                                                                    onClick={() =>
+                                                                        ask({
+                                                                            url: route('technician.appointments.update', appointment.id),
+                                                                            method: 'put',
+                                                                            icon: 'warning',
+                                                                            data: { status: 'completed' },
+                                                                            message: 'Are you sure you want to Complete this Appointment?',
+                                                                        })
+                                                                    }
+                                                                >
+                                                                    Complete
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                    {/* {appointment.status == 'accepted' ? (
+                                                        <Button
+                                                            size="sm"
+                                                            variant="default"
+                                                            onClick={() =>
+                                                                ask({
+                                                                    url: route('technician.appointments.cancel', appointment.id),
+                                                                    method: 'put',
+                                                                    icon: 'warning',
+                                                                    message: 'Are you sure you want to cancel this Appointment?',
+                                                                })
+                                                            }
+                                                        >
+                                                            <span>Cancel</span>
+                                                        </Button>
+                                                    ) : (
+                                                        <Button
+                                                            className="bg-green-500 hover:bg-green-600/90"
+                                                            size="sm"
+                                                            variant="destructive"
+                                                            onClick={() =>
+                                                                ask({
+                                                                    url: route('technician.appointments.accept', appointment.id),
+                                                                    method: 'put',
+                                                                    icon: 'warning',
+                                                                    message: 'Are you sure you want to accept this Appointment?',
+                                                                })
+                                                            }
+                                                        >
+                                                            <span>Accept</span>
+                                                        </Button>
+                                                    )}
                                                     <Button
                                                         size="sm"
                                                         variant="destructive"
@@ -93,7 +194,7 @@ const AppointmentIndex = ({ appointments }) => {
                                                         }
                                                     >
                                                         <span>Reject</span>
-                                                    </Button>
+                                                    </Button> */}
                                                 </div>
                                             </TableCell>
                                         </TableRow>

@@ -22,10 +22,12 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::with(['vendor'])->where('slug', $slug)->firstOrFail();
+        $product = Product::with(['vendor', 'rateReview'])->where('slug', $slug)->firstOrFail();
+        $reviews = $product->rateReview;
         $products = Product::with('vendor')->where('id', '!=', $product->id)->take(4)->get();
         return inertia('landing/products/show', [
             'product' => $product,
+            'reviews' => $reviews,
             'products' => $products,
         ]);
     }

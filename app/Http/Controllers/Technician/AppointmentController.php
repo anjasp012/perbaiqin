@@ -13,19 +13,27 @@ class AppointmentController extends Controller
     {
         $technician = Auth::guard('technician')->user();
         $appointments = Appointment::where('technician_id', $technician->id)
-        ->with('user')
-        ->when(request()->q, function($query) {
-            $query->whereHas('user', function($subquery) {
-                $subquery->where('name', 'like', '%' . request()->q . '%');
-            });
-        })
-        ->latest()
-        ->paginate(10);
+            ->with('user')
+            ->when(request()->q, function ($query) {
+                $query->whereHas('user', function ($subquery) {
+                    $subquery->where('name', 'like', '%' . request()->q . '%');
+                });
+            })
+            ->latest()
+            ->paginate(10);
         $appointments->appends(['q' => request()->q]);
         return inertia('technician/appointments/index', [
             'appointments' => $appointments,
         ]);
     }
 
-    
+    public function update(Request $request, $id)
+    {
+        $appointment = Appointment::find($id)->firstOrFail();
+        $appointment->status = $request->status;
+        $appointment->save();
+
+        flashMessage('success', 'Appointment ' . $appointment->status . ' successfully.');
+        return redirect()->route('technician.appointments.index');
+    }
 }

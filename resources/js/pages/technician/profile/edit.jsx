@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Head, Link } from '@inertiajs/react';
 import { TechnicianLayout } from '@/layouts/technician/technician-layout';
 import { Label } from '@/components/ui/label';
@@ -8,15 +8,26 @@ import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import Select from 'react-select';
 
-const EditProfile = ({ technician }) => {
+const EditProfile = ({ technician, specialists }) => {
     const { data, setData, errors, post } = useForm({
         name: technician.name,
         phone: technician.phone || '',
         price: technician.price || '',
         image: null,
+        specialist_ids: technician.specialists.map((s) => s.id.toString()) || [],
         _method: 'PUT',
     });
+
+    const [selectedSpecialists, setSelectedSpecialists] = useState([]);
+
+    const handleSelectChange = (selectedOptions) => {
+        // Mengatur nilai selectedSpecialists saat ada perubahan pada select
+        setSelectedSpecialists(selectedOptions);
+        const selectedIds = selectedOptions.map((option) => option.value);
+        setData('specialist_ids', selectedIds);
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -34,6 +45,21 @@ const EditProfile = ({ technician }) => {
             onSuccess: () => {},
         });
     };
+
+    useEffect(() => {
+        // Inisialisasi nilai awal selectedSpecialists dengan spesialisasi yang dimiliki oleh teknisi
+        const initialSelected = technician.specialists.map((s) => ({
+            value: s.id.toString(),
+            label: s.name,
+        }));
+        setSelectedSpecialists(initialSelected);
+    }, [technician]);
+
+    const options = specialists.map((specialist) => ({
+        value: specialist.id.toString(),
+        label: specialist.name,
+    }));
+    console.log(options);
 
     return (
         <>
@@ -67,6 +93,17 @@ const EditProfile = ({ technician }) => {
                                     <Label htmlFor="image">Photo Profile </Label>
                                     <Input type="file" id="image" name="image" accept="image/*" onChange={handleImageChange} />
                                     {errors.image && <div className="text-red-500">{errors.image}</div>}
+                                </div>
+                                <div className="mb-3">
+                                    <Label htmlFor="specialists">Specialists </Label>
+                                    <Select
+                                        options={options}
+                                        isMulti
+                                        onChange={handleSelectChange}
+                                        value={selectedSpecialists}
+                                        inputId="specialist_ids"
+                                        name="specialist_ids[]"
+                                    />
                                 </div>
                                 <div className="mt-2">
                                     <Button type="submit">Update Profile</Button>

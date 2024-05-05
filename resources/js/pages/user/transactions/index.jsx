@@ -11,6 +11,7 @@ import Pagination from '@/shared/pagination';
 import useSwal from '@/hooks/useSwal';
 import { UserLayout } from '@/layouts/user/user-layout';
 import Breadcrumb from '@/components/breadcrumb';
+import { Badge } from '@/components/ui/badge';
 
 export default function TransactionIndex() {
     const { auth, transactions } = usePage().props;
@@ -48,7 +49,10 @@ export default function TransactionIndex() {
                                                 <TableCell>{transaction.no_transaction}</TableCell>
                                                 <TableCell>{formatRupiah(transaction.total_price)}</TableCell>
                                                 <TableCell>{transaction.payment_method}</TableCell>
-                                                <TableCell>{transaction.transaction_status}</TableCell>
+
+                                                <TableCell>
+                                                    <Badge>{transaction.transaction_status}</Badge>
+                                                </TableCell>
                                                 <TableCell>{transaction.created_at}</TableCell>
                                                 <TableCell>{transaction.vendor.name}</TableCell>
                                                 <TableCell>

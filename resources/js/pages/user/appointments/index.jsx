@@ -11,6 +11,7 @@ import Pagination from '@/shared/pagination';
 import useSwal from '@/hooks/useSwal';
 import { UserLayout } from '@/layouts/user/user-layout';
 import Breadcrumb from '@/components/breadcrumb';
+import { Badge } from '@/components/ui/badge';
 
 export default function TransactionIndex() {
     const { auth, appointments } = usePage().props;
@@ -38,6 +39,7 @@ export default function TransactionIndex() {
                                             <TableHead>Date</TableHead>
                                             <TableHead>Time</TableHead>
                                             <TableHead>Status</TableHead>
+                                            <TableHead>Action</TableHead>
                                             {/* <TableHead>Transaction Date</TableHead>
                                             <TableHead>Vendor</TableHead>
                                             <TableHead>Actions</TableHead> */}
@@ -50,7 +52,19 @@ export default function TransactionIndex() {
                                                 <TableCell>{appointment.technician.name}</TableCell>
                                                 <TableCell>{appointment.date}</TableCell>
                                                 <TableCell>{appointment.time}</TableCell>
-                                                <TableCell>{appointment.status}</TableCell>
+                                                <TableCell>
+                                                    <Badge>{appointment.status}</Badge>
+                                                </TableCell>
+                                                {appointment.status == 'completed' && (
+                                                    <TableCell>
+                                                        <Link
+                                                            href={route('user.productreview.create', appointment.id)}
+                                                            className={buttonVariants({ size: 'sm', variant: 'default' })}
+                                                        >
+                                                            Rate & Review
+                                                        </Link>
+                                                    </TableCell>
+                                                )}
                                                 {/* <TableCell>
                                                     <div className="flex gap-2">
                                                         <Link

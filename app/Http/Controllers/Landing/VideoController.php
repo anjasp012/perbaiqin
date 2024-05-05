@@ -12,7 +12,7 @@ class VideoController extends Controller
     public function index()
     {
         $videos = Video::with(['technician'])->when(request()->q, function ($videos) {
-            $videos = $videos->where('caption', 'like', '%' . request()->q . '%');
+            $videos = $videos->where('captions', 'like', '%' . request()->q . '%');
         })->latest()->paginate(12);
         $videos->appends(['q' => request()->q]);
 

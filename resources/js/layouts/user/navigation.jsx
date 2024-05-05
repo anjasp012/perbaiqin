@@ -151,6 +151,7 @@ const navLinks = [
     { label: 'Dashboard', route: 'user.dashboard' },
     { label: 'Appointments History', route: 'user.appointments.index' },
     { label: 'Transaction History', route: 'user.transactions.index' },
+    { label: 'Collaboration Order History', route: 'user.collaborationOrders.index' },
 ];
 
 export function NavLink({ active, children, href }) {
