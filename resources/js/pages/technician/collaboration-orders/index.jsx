@@ -59,26 +59,14 @@ export default function CollaborationOrderIndex() {
                                                 <TableCell>
                                                     <div className="flex gap-2">
                                                         <Link
-                                                            href={route('technician.collaboration-orders.show', collaborationOrder.no_transaction)}
+                                                            href={route(
+                                                                'technician.collaboration-orders.show',
+                                                                collaborationOrder.no_transaction_collaboration,
+                                                            )}
                                                             className={buttonVariants({ size: 'sm', variant: 'default' })}
                                                         >
                                                             Details
                                                         </Link>
-
-                                                        <Button
-                                                            size="sm"
-                                                            variant="destructive"
-                                                            onClick={() =>
-                                                                ask({
-                                                                    url: route('technician.collaboration-orders.destroy', [collaborationOrder.id]),
-                                                                    method: 'delete',
-                                                                    icon: 'warning',
-                                                                    message: 'Are you sure you want to delete this Order?',
-                                                                })
-                                                            }
-                                                        >
-                                                            <span>Delete</span>
-                                                        </Button>
                                                     </div>
                                                 </TableCell>
                                             </TableRow>

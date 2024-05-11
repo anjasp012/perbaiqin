@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { formatRupiah } from '@/lib/utils';
 import useSwal from '@/hooks/useSwal';
 import { Image } from '@/components/image';
-import { VendorLayout } from '@/layouts/vendor/vendor-layout';
+import { TechnicianLayout } from '@/layouts/technician/technician-layout';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -34,10 +34,10 @@ export default function TransactionIndex() {
             <Head title="Transaction" />
             <Container>
                 <>
-                    <Header title={transaction.no_transaction} subtitle={`Transaction Details`}></Header>
+                    <Header title={transaction.no_transaction_collaboration} subtitle={`Collaboration Order Details`}></Header>
                     <div className="px-4 py-6 sm:px-6 lg:p-8">
                         <div className="mb-8 flex justify-between">
-                            <h2 className="text-lg font-bold">Transaction Information</h2>
+                            <h2 className="text-lg font-bold">Collaboration Order Information</h2>
                         </div>
                         <Card className="mb-20 border-none">
                             <CardHeader></CardHeader>
@@ -48,7 +48,7 @@ export default function TransactionIndex() {
                                             <div className="space-y-1 sm:col-span-2">
                                                 <label
                                                     className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    for="company"
+                                                    htmlFor="company"
                                                 >
                                                     Buyer Name
                                                 </label>
@@ -62,7 +62,7 @@ export default function TransactionIndex() {
                                             <div className="space-y-1 sm:col-span-2">
                                                 <label
                                                     className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    for="company"
+                                                    htmlFor="company"
                                                 >
                                                     Buyer Phone
                                                 </label>
@@ -76,7 +76,7 @@ export default function TransactionIndex() {
                                             <div className="space-y-1 sm:col-span-2">
                                                 <label
                                                     className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    for="company"
+                                                    htmlFor="company"
                                                 >
                                                     Address
                                                 </label>
@@ -90,7 +90,7 @@ export default function TransactionIndex() {
                                             <div className="space-y-1 sm:col-span-2">
                                                 <label
                                                     className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    for="company"
+                                                    htmlFor="company"
                                                 >
                                                     Province
                                                 </label>
@@ -104,7 +104,7 @@ export default function TransactionIndex() {
                                             <div className="space-y-1 sm:col-span-2">
                                                 <label
                                                     className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    for="company"
+                                                    htmlFor="company"
                                                 >
                                                     City
                                                 </label>
@@ -118,7 +118,7 @@ export default function TransactionIndex() {
                                             <div className="space-y-1 sm:col-span-2">
                                                 <label
                                                     className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    for="company"
+                                                    htmlFor="company"
                                                 >
                                                     Postal Code
                                                 </label>
@@ -132,7 +132,7 @@ export default function TransactionIndex() {
                                             <div className="space-y-1 sm:col-span-2">
                                                 <label
                                                     className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    for="company"
+                                                    htmlFor="company"
                                                 >
                                                     Total Price
                                                 </label>
@@ -146,7 +146,7 @@ export default function TransactionIndex() {
                                             <div className="space-y-1 sm:col-span-2">
                                                 <label
                                                     className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    for="company"
+                                                    htmlFor="company"
                                                 >
                                                     Payment Method
                                                 </label>
@@ -154,37 +154,6 @@ export default function TransactionIndex() {
                                             <div className="space-y-1 sm:col-span-1">:</div>
                                             <div className="space-y-1 sm:col-span-4">
                                                 <div className="font-bold">{transaction.payment_method}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-1 sm:col-span-3">
-                                        <div className="mb-3 grid grid-cols-1 items-center gap-x-4 gap-y-6 sm:grid-cols-7">
-                                            <div className="space-y-1 sm:col-span-2">
-                                                <label
-                                                    className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    for="company"
-                                                >
-                                                    Transaction Status
-                                                </label>
-                                            </div>
-                                            <div className="space-y-1 sm:col-span-1">:</div>
-                                            <div className="space-y-1 sm:col-span-4">
-                                                <form onSubmit={handleSubmit}>
-                                                    <div className="flex gap-2">
-                                                        <select
-                                                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-foreground/70 focus-visible:outline-none focus-visible:ring-[0.20rem] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                                                            id="transaction_status"
-                                                            name="transaction_status"
-                                                            onChange={handleChange}
-                                                            value={data.transaction_status}
-                                                        >
-                                                            <option value="PROCES">PROCESS</option>
-                                                            <option value="ON DELIVERY">ON DELIVERY</option>
-                                                            <option value="SUCCESS">SUCCESS</option>
-                                                        </select>
-                                                        <Button type="submit">Update</Button>
-                                                    </div>
-                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -201,10 +170,9 @@ export default function TransactionIndex() {
                                     <TableHeader>
                                         <TableRow>
                                             <TableHead>No.</TableHead>
-                                            <TableHead>Product Image</TableHead>
-                                            <TableHead>Product</TableHead>
+                                            <TableHead>Collaboration Image</TableHead>
+                                            <TableHead>Collaboration</TableHead>
                                             <TableHead>Price</TableHead>
-                                            <TableHead className="text-center">Quantity</TableHead>
                                             <TableHead className="text-end">Total Price</TableHead>
                                         </TableRow>
                                     </TableHeader>
@@ -216,15 +184,14 @@ export default function TransactionIndex() {
                                                     <Image
                                                         width={100}
                                                         className="aspect-[16/9] w-full rounded-2xl border object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
-                                                        src={details.product.image}
+                                                        src={'/storage/' + details.collaboration.image}
                                                     />
                                                 </TableCell>
                                                 <TableCell>
-                                                    <div>{details.product.name}</div>
+                                                    <div>{details.collaboration.name}</div>
                                                 </TableCell>
-                                                <TableCell>{formatRupiah(details.product.price)}</TableCell>
-                                                <TableCell className="text-center">{details.quantity}</TableCell>
-                                                <TableCell className="text-end">{formatRupiah(details.product.price * details.quantity)}</TableCell>
+                                                <TableCell>{formatRupiah(details.collaboration.price)}</TableCell>
+                                                <TableCell className="text-end">{formatRupiah(details.collaboration.price)}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -238,4 +205,4 @@ export default function TransactionIndex() {
     );
 }
 
-TransactionIndex.layout = (page) => <VendorLayout children={page} />;
+TransactionIndex.layout = (page) => <TechnicianLayout children={page} />;

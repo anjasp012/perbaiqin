@@ -13,7 +13,7 @@ class CollaborationOrderController extends Controller
      */
     public function index()
     {
-        $collaborationOrders = TCollaboration::with('tcollaboration_details')->when(request()->q, function ($collaborationOrders) {
+        $collaborationOrders = TCollaboration::with('t_collaboration_details')->when(request()->q, function ($collaborationOrders) {
             $collaborationOrders = $collaborationOrders->where('no_transaction', 'like', '%' . request()->q . '%');
         })
             ->where('technician_id', auth()->guard('technician')->user()->id)
@@ -44,9 +44,18 @@ class CollaborationOrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $no_transaction)
     {
-        //
+        $transaction = TCollaboration::with(['t_collaboration_details.collaboration.technician'])->where('no_transaction_collaboration', $no_transaction)->first();
+        $transaction_details = $transaction->t_collaboration_details;
+        $totalPrice = $transaction_details->sum(function ($details) {
+            return $details->collaboration->price;
+        });
+        return inertia('technician/collaboration-orders/show', [
+            'transaction' => $transaction,
+            'transaction_details' => $transaction_details,
+            'totalPrice' => $totalPrice,
+        ]);
     }
 
     /**
