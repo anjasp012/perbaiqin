@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Landing\AppointmentController;
 use App\Http\Controllers\Landing\AskTechnicianController;
-use App\Http\Controllers\landing\CollaborationController;
+use App\Http\Controllers\Landing\CollaborationController;
 use App\Http\Controllers\Landing\ConsultationController;
 use App\Http\Controllers\Landing\HomeController;
 use App\Http\Controllers\Landing\ProductController;
