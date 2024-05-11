@@ -18,7 +18,7 @@ class Product extends Model
         return $this->belongsTo(Vendor::class);
     }
 
-    public function rateReview()
+    public function rateReviews()
     {
         return $this->hasMany(ProductReview::class);
     }

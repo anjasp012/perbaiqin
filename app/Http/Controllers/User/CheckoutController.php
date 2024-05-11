@@ -126,6 +126,6 @@ class CheckoutController extends Controller
         ]);
 
         flashMessage('Success', 'Collaboration Order created successfully', 'success');
-        return redirect()->route('user.transactions.index');
+        return redirect()->route('user.collaborationOrders.index');
     }
 }

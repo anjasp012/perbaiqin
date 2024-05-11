@@ -12,7 +12,7 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import CollaborationCard from './collaboration-card';
 
 export default function CollaborationShow() {
-    const { auth, collaborations, collaboration } = usePage().props;
+    const { auth, collaborations, collaboration, reviews } = usePage().props;
 
     const addToCartHandler = (e) => {
         e.preventDefault();
@@ -65,18 +65,18 @@ export default function CollaborationShow() {
                         <div className="mt-10">
                             <h3 className="mb-6 text-xl font-semibold leading-none tracking-tight">Reviews</h3>
                             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                                <Card>
-                                    <CardHeader>⭐⭐⭐⭐⭐</CardHeader>
-                                    <CardContent>Mantap</CardContent>
-                                </Card>
-                                <Card>
-                                    <CardHeader>⭐⭐⭐⭐⭐</CardHeader>
-                                    <CardContent>Mantap</CardContent>
-                                </Card>
-                                <Card>
-                                    <CardHeader>⭐⭐</CardHeader>
-                                    <CardContent>Rusak</CardContent>
-                                </Card>
+                                {reviews.map((review, index) => (
+                                    <Card key={index}>
+                                        <CardHeader>
+                                            {Array.from({ length: review.rate }, (_, starIndex) => (
+                                                <span className="contents" key={starIndex}>
+                                                    ⭐
+                                                </span>
+                                            ))}
+                                        </CardHeader>
+                                        <CardContent>{review.review}</CardContent>
+                                    </Card>
+                                ))}
                             </div>
                         </div>
                         <div className="mt-10">

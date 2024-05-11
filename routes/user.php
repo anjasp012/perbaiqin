@@ -4,6 +4,7 @@ use App\Http\Controllers\User\AppointmentController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\CollaborationOrderController;
+use App\Http\Controllers\User\CollaborationReviewController;
 use App\Http\Controllers\User\ConsultationController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ProductReviewController;
@@ -48,5 +49,6 @@ Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
         Route::post('transactions/{no_transaction}', [TransactionController::class, 'update'])->name('transactions.update');
 
         Route::post('transaction/product-review/{id}/{slug}', [ProductReviewController::class, 'store'])->name('productreview.store');
+        Route::post('transaction/collaboration-review/{id}/{slug}', [CollaborationReviewController::class, 'store'])->name('collaborationreview.store');
     });
 });

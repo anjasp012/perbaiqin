@@ -22,8 +22,8 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::with(['vendor', 'rateReview'])->where('slug', $slug)->firstOrFail();
-        $reviews = $product->rateReview;
+        $product = Product::with(['vendor', 'rateReviews'])->where('slug', $slug)->firstOrFail();
+        $reviews = $product->rateReviews;
         $products = Product::with('vendor')->where('id', '!=', $product->id)->take(4)->get();
         return inertia('landing/products/show', [
             'product' => $product,

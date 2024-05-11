@@ -6,12 +6,17 @@ import Search from '@/shared/search';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { formatRupiah } from '@/lib/utils';
+import { cn, formatRupiah } from '@/lib/utils';
 import Pagination from '@/shared/pagination';
 import useSwal from '@/hooks/useSwal';
 import { UserLayout } from '@/layouts/user/user-layout';
 import { Image } from '@/components/image';
 import Breadcrumb from '@/components/breadcrumb';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { ChevronUp } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function TransactionIndex() {
     const { auth, transaction, transaction_details, totalPrice } = usePage().props;
@@ -19,8 +24,8 @@ export default function TransactionIndex() {
     const { ask } = useSwal();
 
     const { data, setData, post, processing, errors } = useForm({
-        transaction_collaboration_status: transaction.transaction_collaboration_status,
-        _method: 'PATCH',
+        rate: '',
+        review: '',
     });
 
     const handleChange = (e) => {
@@ -28,9 +33,10 @@ export default function TransactionIndex() {
         setData(name, name === 'image' ? files[0] : value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmitRateReview = (id, slug) => (e) => {
+        console.log(slug);
         e.preventDefault();
-        post(route('user.collaborationOrders.update', transaction.id));
+        post(route('user.collaborationreview.store', [id, slug]));
     };
     return (
         <>
@@ -160,36 +166,6 @@ export default function TransactionIndex() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="space-y-1 sm:col-span-3">
-                                        <div className="mb-3 grid grid-cols-1 items-center gap-x-4 gap-y-6 sm:grid-cols-7">
-                                            <div className="space-y-1 sm:col-span-2">
-                                                <label
-                                                    className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    htmlFor="company"
-                                                >
-                                                    Order Status
-                                                </label>
-                                            </div>
-                                            <div className="space-y-1 sm:col-span-1">:</div>
-                                            <div className="space-y-1 sm:col-span-4">
-                                                <form onSubmit={handleSubmit}>
-                                                    <div className="flex gap-2">
-                                                        <select
-                                                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-foreground/70 focus-visible:outline-none focus-visible:ring-[0.20rem] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                                                            id="transaction_collaboration_status"
-                                                            name="transaction_collaboration_status"
-                                                            onChange={handleChange}
-                                                            value={data.transaction_collaboration_status}
-                                                        >
-                                                            <option value="PROCES">PROCESS</option>
-                                                            <option value="SUCCESS">SUCCESS</option>
-                                                        </select>
-                                                        <Button type="submit">Update</Button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </CardContent>
                         </Card>
@@ -226,6 +202,31 @@ export default function TransactionIndex() {
                                                 </TableCell>
                                                 <TableCell>{formatRupiah(detail.collaboration.price)}</TableCell>
                                                 <TableCell className="text-end">{formatRupiah(detail.collaboration.price)}</TableCell>
+                                                {detail.reviewed == false && (
+                                                    <TableCell className="text-center">
+                                                        <DropdownMenu>
+                                                            <DropdownMenuTrigger className={cn(buttonVariants({ size: 'sm' }), 'tracking-tighter')}>
+                                                                Rate & Review
+                                                                <ChevronUp className="ml-2 h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                                                            </DropdownMenuTrigger>
+                                                            <DropdownMenuContent align="end" className="w-full">
+                                                                <form onSubmit={handleSubmitRateReview(detail.id, detail.collaboration.slug)}>
+                                                                    <div className="mb-3">
+                                                                        <Label htmlFor="rate">Rate</Label>
+                                                                        <Input name="rate" onChange={handleChange} id="rate" type="number" min="1" max="5" />
+                                                                    </div>
+                                                                    <div className="mb-3">
+                                                                        <Label htmlFor="review">Review</Label>
+                                                                        <Textarea name="review" onChange={handleChange} id="review" />
+                                                                    </div>
+                                                                    <div className="mb-0">
+                                                                        <Button className="w-full">Save </Button>
+                                                                    </div>
+                                                                </form>
+                                                            </DropdownMenuContent>
+                                                        </DropdownMenu>
+                                                    </TableCell>
+                                                )}
                                             </TableRow>
                                         ))}
                                     </TableBody>

@@ -8,7 +8,7 @@ use App\Http\Controllers\Technician\CartController;
 use App\Http\Controllers\Technician\CertificateController;
 use App\Http\Controllers\Technician\CheckoutController;
 use App\Http\Controllers\Technician\CollaborationController;
-use App\Http\Controllers\technician\CollaborationOrderController;
+use App\Http\Controllers\Technician\CollaborationOrderController;
 use App\Http\Controllers\Technician\ConsultationController;
 use App\Http\Controllers\Technician\DashboardController;
 use App\Http\Controllers\Technician\ProfileController;

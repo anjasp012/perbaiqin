@@ -13,4 +13,9 @@ class Collaboration extends Model
     {
         return $this->belongsTo(Technician::class);
     }
+
+    public function rateReviews()
+    {
+        return $this->hasMany(CollaborationReview::class);
+    }
 }

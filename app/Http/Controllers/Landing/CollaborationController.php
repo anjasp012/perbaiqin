@@ -10,11 +10,13 @@ class CollaborationController extends Controller
 {
     public function show($slug)
     {
-        $collaboration = Collaboration::with(['technician'])->where('slug', $slug)->firstOrFail();
+        $collaboration = Collaboration::with(['technician', 'rateReviews'])->where('slug', $slug)->firstOrFail();
+        $reviews = $collaboration->rateReviews;
         $collaborations = Collaboration::with('technician')->where('id', '!=', $collaboration->id)->take(4)->get();
         return inertia('landing/collaborations/show', [
             'collaboration' => $collaboration,
             'collaborations' => $collaborations,
+            'reviews' => $reviews,
         ]);
     }
 }

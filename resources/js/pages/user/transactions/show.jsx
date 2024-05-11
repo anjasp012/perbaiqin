@@ -241,7 +241,7 @@ export default function TransactionIndex() {
                                                 <TableCell>{formatRupiah(detail.product.price)}</TableCell>
                                                 <TableCell className="text-center">{detail.quantity}</TableCell>
                                                 <TableCell className="text-end">{formatRupiah(detail.product.price * detail.quantity)}</TableCell>
-                                                {detail.reviewed == null && transaction.transaction_status == 'SUCCESS' && (
+                                                {detail.reviewed == false && transaction.transaction_status == 'SUCCESS' && (
                                                     <TableCell className="text-center">
                                                         <DropdownMenu>
                                                             <DropdownMenuTrigger className={cn(buttonVariants({ size: 'sm' }), 'tracking-tighter')}>
