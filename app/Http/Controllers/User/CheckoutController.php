@@ -117,7 +117,6 @@ class CheckoutController extends Controller
             'payment_method' => $request->payment_method,
             'technician_id' => $collaboration->technician_id,
             'total_price' => $collaboration->price,
-            'transaction_collaboration_status' => 'PROCESS',
         ]);
         TCollaborationDetail::create([
             't_collaboration_id' => $transactions->id,
