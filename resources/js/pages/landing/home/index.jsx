@@ -29,12 +29,12 @@ export default function Home({ products, specialists, collaborations }) {
                             <h1 className="mb-1 mt-10 text-2xl font-bold tracking-tight text-foreground sm:text-4xl">Comprehensive Gadget Solution</h1>
                             <p className="mb-3 text-gray-600 dark:text-gray-400">Directly handled by Experts in the context of Gadgets, Technology, and more</p>
 
-                            <div className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4">
+                            <div className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-5">
                                 <Link href={route('landing.ask-technician.index')} className="text-xs font-bold sm:text-sm">
                                     <Card className="p-4">
                                         <div className="flex justify-center">
                                             <Avatar className="h-8 w-8 md:h-20 md:w-20">
-                                                <AvatarImage className="h-8 w-8 md:h-20 md:w-20" src="https://github.com/shadcn.png" />
+                                                <AvatarImage className="h-8 w-8 md:h-20 md:w-20" src={'/assets/4.png'} />
                                                 <AvatarFallback>CN</AvatarFallback>
                                             </Avatar>
                                         </div>
@@ -46,7 +46,7 @@ export default function Home({ products, specialists, collaborations }) {
                                     <Card className="p-4">
                                         <div className="flex justify-center">
                                             <Avatar className="h-8 w-8 md:h-20 md:w-20">
-                                                <AvatarImage className="h-8 w-8 md:h-20 md:w-20" src="https://github.com/shadcn.png" />
+                                                <AvatarImage className="h-8 w-8 md:h-20 md:w-20" src={'/assets/1.png'} />
                                                 <AvatarFallback>CN</AvatarFallback>
                                             </Avatar>
                                         </div>
@@ -57,7 +57,7 @@ export default function Home({ products, specialists, collaborations }) {
                                     <Card className="p-4">
                                         <div className="flex justify-center">
                                             <Avatar className="h-8 w-8 md:h-20 md:w-20">
-                                                <AvatarImage className="h-8 w-8 md:h-20 md:w-20" src="https://github.com/shadcn.png" />
+                                                <AvatarImage className="h-8 w-8 md:h-20 md:w-20" src={'/assets/3.png'} />
                                                 <AvatarFallback>CN</AvatarFallback>
                                             </Avatar>
                                         </div>
@@ -68,11 +68,22 @@ export default function Home({ products, specialists, collaborations }) {
                                     <Card className="p-4">
                                         <div className="flex justify-center">
                                             <Avatar className="h-8 w-8 md:h-20 md:w-20">
-                                                <AvatarImage className="h-8 w-8 md:h-20 md:w-20" src="https://github.com/shadcn.png" />
+                                                <AvatarImage className="h-8 w-8 md:h-20 md:w-20" src={'/assets/2.png'} />
                                                 <AvatarFallback>CN</AvatarFallback>
                                             </Avatar>
                                         </div>
                                         <div className="mt-2 flex justify-center text-center">QuickLearn Videos</div>
+                                    </Card>
+                                </Link>
+                                <Link href={route('landing.products.index')} className="text-xs font-bold sm:text-sm">
+                                    <Card className="p-4">
+                                        <div className="flex justify-center">
+                                            <Avatar className="h-8 w-8 md:h-20 md:w-20">
+                                                <AvatarImage className="h-8 w-8 md:h-20 md:w-20" src={'/assets/3.png'} />
+                                                <AvatarFallback>CN</AvatarFallback>
+                                            </Avatar>
+                                        </div>
+                                        <div className="mt-2 flex justify-center text-center">Collaboration Fix Up</div>
                                     </Card>
                                 </Link>
                             </div>
