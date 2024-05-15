@@ -18,16 +18,16 @@ export default function VideoIndex() {
 
     return (
         <>
-            <Head title="Videos" />
+            <Head title="QuickLearn Videos" />
             <Container>
                 <>
                     <Breadcrumb
                         links={[
                             { label: 'Home', url: '/' },
-                            { label: 'Videos', url: '/videos' },
+                            { label: 'QuickLearn Videos', url: '/videos' },
                         ]}
                     />
-                    <Header title={'Videos'} subtitle={`All Videos`}></Header>
+                    <Header title={'QuickLearn Videos'} subtitle={`All QuickLearn Videos`}></Header>
                     <div className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
                         <div className="grid gap-10 md:grid-cols-12">
                             <div className="md:col-span-12">

@@ -70,7 +70,7 @@ export default function CartIndex() {
                                                                 variant="destructive"
                                                                 onClick={() =>
                                                                     ask({
-                                                                        url: route('cart.destroy', [cart.id]),
+                                                                        url: route('technician.cart.destroy', [cart.id]),
                                                                         method: 'delete',
                                                                         icon: 'warning',
                                                                         message: 'Are you sure you want to delete this Product from Cart?',

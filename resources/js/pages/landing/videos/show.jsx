@@ -17,14 +17,14 @@ export default function ProductShow() {
 
     return (
         <>
-            <Head title="Play Video" />
+            <Head title="Play QuickLearn Video" />
             <Container>
                 <>
                     <Breadcrumb
                         links={[
                             { label: 'Home', url: '/' },
-                            { label: 'Videos', url: '/videos' },
-                            { label: 'Play Video', url: '' },
+                            { label: 'QuickLearn Videos', url: '/videos' },
+                            { label: 'Play QuickLearn Video', url: '' },
                         ]}
                     />
                     <div className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
@@ -55,7 +55,7 @@ export default function ProductShow() {
                                         </div>
                                     </div>
                                     <div className="mt-6 flex flex-col md:col-span-3 md:mt-0">
-                                        <h3 className="mb-6 text-xl font-semibold leading-none tracking-tight">Other Videos</h3>
+                                        <h3 className="mb-6 text-xl font-semibold leading-none tracking-tight">Other QuickLearn Videos</h3>
                                         {videos.length > 0 ? (
                                             videos.map((video) => (
                                                 <div className="mb-3" key={video.id}>

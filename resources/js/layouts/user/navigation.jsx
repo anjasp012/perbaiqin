@@ -114,7 +114,7 @@ export function Navigation() {
                                     {auth.user.name}{' '}
                                     <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56">
+                                <DropdownMenuContent align="start" className="w-56">
                                     <DropdownMenuItem asChild>
                                         <Link href={route('user.dashboard')}>
                                             <GaugeIcon className="mr-2 h-4 w-4" />

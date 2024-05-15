@@ -72,7 +72,7 @@ export default function Home({ products, specialists, collaborations }) {
                                                 <AvatarFallback>CN</AvatarFallback>
                                             </Avatar>
                                         </div>
-                                        <div className="mt-2 flex justify-center text-center">Videos</div>
+                                        <div className="mt-2 flex justify-center text-center">QuickLearn Videos</div>
                                     </Card>
                                 </Link>
                             </div>

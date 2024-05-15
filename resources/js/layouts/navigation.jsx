@@ -147,6 +147,88 @@ export function Navigation() {
                                     {navLink.label}
                                 </NavLinkResponsive>
                             ))}
+                            {auth.user || auth.technician || auth.admin || auth.vendor ? (
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger className={cn(buttonVariants({ size: 'sm' }), 'w-full justify-start tracking-tighter')}>
+                                        {(auth.user && auth.user.name) ||
+                                            (auth.technician && auth.technician.name) ||
+                                            (auth.admin && auth.admin.name) ||
+                                            (auth.vendor && auth.vendor.name) ||
+                                            'Default Name'}
+                                        <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="start" className="w-60">
+                                        <DropdownMenuItem asChild>
+                                            <Link
+                                                href={route(
+                                                    `${
+                                                        (auth.vendor && 'vendor.') ||
+                                                        (auth.admin && 'admin.') ||
+                                                        (auth.technician && 'technician.') ||
+                                                        (auth.user && 'user.')
+                                                    }dashboard`,
+                                                )}
+                                            >
+                                                <GaugeIcon className="mr-2 h-4 w-4" />
+                                                Dashboard
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        {(auth.user || auth.technician) && (
+                                            <>
+                                                <DropdownMenuItem asChild>
+                                                    <Link href={route((auth.technician && 'technician.cart.index') || (auth.user && 'user.cart.index'))}>
+                                                        <ShoppingCartIcon className="mr-2 h-4 w-4" />
+                                                        Cart
+                                                    </Link>
+                                                </DropdownMenuItem>
+                                            </>
+                                        )}
+
+                                        <DropdownMenuItem asChild>
+                                            <Link
+                                                href={route(
+                                                    (auth.technician && 'technician.profile.edit') ||
+                                                        (auth.vendor && 'vendor.profile.edit') ||
+                                                        (auth.user && 'user.profile.edit') ||
+                                                        (auth.admin && 'admin.profile.edit'),
+                                                )}
+                                            >
+                                                <Settings2Icon className="mr-2 h-4 w-4" />
+                                                Settings
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                            onSelect={() =>
+                                                router.post(
+                                                    route(
+                                                        (auth.technician && 'technician.logout') ||
+                                                            (auth.vendor && 'vendor.logout') ||
+                                                            (auth.user && 'logout') ||
+                                                            (auth.admin && 'admin.logout'),
+                                                    ),
+                                                )
+                                            }
+                                        >
+                                            <PowerIcon className="mr-2 h-4 w-4" />
+                                            Log out
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            ) : (
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger className={cn(navLinkClasses, 'group w-full justify-start focus:outline-none')}>
+                                        Login <ChevronDown className="ml-2 h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="start" className="w-60">
+                                        <DropdownMenuItem asChild>
+                                            <Link href={route('login')}>Login</Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem asChild>
+                                            <Link href={route('register')}>Register</Link>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            )}
                         </div>
                     </SheetContent>
                 </Sheet>
@@ -159,8 +241,9 @@ const navLinks = [
     { label: 'Home', route: 'home' },
     { label: 'Ask Technician', route: 'landing.ask-technician.index' },
     { label: 'Appointments', route: 'landing.appointments.index' },
-    { label: 'Videos', route: 'landing.videos.index' },
+    { label: 'QuickLearn Videos', route: 'landing.videos.index' },
     { label: 'Products', route: 'landing.products.index' },
+    { label: 'Collaboration Fix Up', route: 'landing.products.index' },
 ];
 
 export function NavLink({ active, children, href }) {
