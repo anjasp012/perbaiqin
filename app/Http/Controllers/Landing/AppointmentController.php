@@ -38,13 +38,16 @@ class AppointmentController extends Controller
             flashMessage('Login', 'Please login before make appointments', 'warning');
             return redirect()->route('login');
         }
-        $technician = Technician::where('slug', $slug)->firstOrFail();
+        $technician = Technician::with(['reviews'])->where('slug', $slug)->firstOrFail();
         $formattedTechnician = new TechnicianBlockResource($technician);
+        $reviews = $technician->reviews;
 
+        // dd($technician);
         return inertia(
             'landing/appointments/show',
             [
-                'technician' => $formattedTechnician
+                'technician' => $formattedTechnician,
+                'reviews' => $reviews
             ]
         );
     }
@@ -53,15 +56,16 @@ class AppointmentController extends Controller
     {
         $userId = auth()->guard('web')->user()->id;
 
-       $existingAppointment = Appointment::where('user_id', $userId)
-        ->where('technician_id', $technicianId)
-        ->where('status', ['pending', 'accepted'])
-        ->first();
+        $existingAppointment = Appointment::where('user_id', $userId)
+            ->where('technician_id', $technicianId)
+            ->where('status', ['pending', 'accepted'])
+            ->first();
 
         if ($existingAppointment) {
             return response()->json([
                 'success' => false,
-                'message' => 'You already have an existing appointment with this technician.'], 400);
+                'message' => 'You already have an existing appointment with this technician.'
+            ], 400);
         }
 
         $technician = Technician::findOrFail($technicianId);
@@ -91,7 +95,8 @@ class AppointmentController extends Controller
         if (!$appointment) {
             return response()->json([
                 'success' => false,
-                'message' => 'Appointment not found or status is not pending.'], 404);
+                'message' => 'Appointment not found or status is not pending.'
+            ], 404);
         }
 
         // Ubah status janji temu menjadi dibatalkan
@@ -100,7 +105,7 @@ class AppointmentController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Appointment canceled successfully']);
+            'message' => 'Appointment canceled successfully'
+        ]);
     }
-
 }

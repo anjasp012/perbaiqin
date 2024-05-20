@@ -53,6 +53,12 @@ export default function TechnicianTable({ technicians, handleTechnicianDelete })
                                 ''
                             )}
                             <Link
+                                href={route('admin.technicians.certificates', technician.slug)}
+                                className={buttonVariants({ variant: 'default', size: 'sm' }) + ' me-2'}
+                            >
+                                Certificates
+                            </Link>
+                            <Link
                                 href={route('admin.technicians.show', technician.slug)}
                                 className={buttonVariants({ variant: 'default', size: 'sm' }) + ' me-2'}
                             >

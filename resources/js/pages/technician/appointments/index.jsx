@@ -149,52 +149,6 @@ const AppointmentIndex = ({ appointments }) => {
                                                             </DropdownMenuItem>
                                                         </DropdownMenuContent>
                                                     </DropdownMenu>
-                                                    {/* {appointment.status == 'accepted' ? (
-                                                        <Button
-                                                            size="sm"
-                                                            variant="default"
-                                                            onClick={() =>
-                                                                ask({
-                                                                    url: route('technician.appointments.cancel', appointment.id),
-                                                                    method: 'put',
-                                                                    icon: 'warning',
-                                                                    message: 'Are you sure you want to cancel this Appointment?',
-                                                                })
-                                                            }
-                                                        >
-                                                            <span>Cancel</span>
-                                                        </Button>
-                                                    ) : (
-                                                        <Button
-                                                            className="bg-green-500 hover:bg-green-600/90"
-                                                            size="sm"
-                                                            variant="destructive"
-                                                            onClick={() =>
-                                                                ask({
-                                                                    url: route('technician.appointments.accept', appointment.id),
-                                                                    method: 'put',
-                                                                    icon: 'warning',
-                                                                    message: 'Are you sure you want to accept this Appointment?',
-                                                                })
-                                                            }
-                                                        >
-                                                            <span>Accept</span>
-                                                        </Button>
-                                                    )}
-                                                    <Button
-                                                        size="sm"
-                                                        variant="destructive"
-                                                        onClick={() =>
-                                                            ask({
-                                                                url: route('technician.appointments.index'),
-                                                                method: 'delete',
-                                                                icon: 'warning',
-                                                                message: 'Are you sure you want to reject this Appointment?',
-                                                            })
-                                                        }
-                                                    >
-                                                        <span>Reject</span>
-                                                    </Button> */}
                                                 </div>
                                             </TableCell>
                                         </TableRow>

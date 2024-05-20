@@ -7,6 +7,7 @@ use App\Http\Resources\TechnicianBlockResource;
 use App\Models\Specialist;
 use Illuminate\Http\Request;
 use App\Models\Technician;
+use App\Models\TechnicianCertificate;
 use App\Models\TechnicianSpecialist;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
@@ -83,6 +84,22 @@ class TechnicianController extends Controller
             [
                 'technician' => $technician,
                 'specialists' => $specialists,
+            ]
+        );
+    }
+
+    public function certificates($slug)
+    {
+        $technician = Technician::with(['certificates'])->where('slug', $slug)->firstOrFail();
+        $certificates = TechnicianCertificate::where('technician_id', $technician->id)->when(request()->q, function ($certificate) {
+            $certificate = $certificate->where('name', 'like', '%' . request()->q . '%');
+        })->latest()->paginate(10);
+
+        return inertia(
+            'admin/technicianCertificates/index',
+            [
+                'technician' => $technician,
+                'certificates' => $certificates,
             ]
         );
     }

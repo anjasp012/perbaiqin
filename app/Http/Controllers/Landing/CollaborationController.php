@@ -8,6 +8,18 @@ use Illuminate\Http\Request;
 
 class CollaborationController extends Controller
 {
+    public function index()
+    {
+        $collaborations = Collaboration::with('technician')->when(request()->q, function ($collaborations) {
+            $collaborations = $collaborations->where('name', 'like', '%' . request()->q . '%');
+        })->latest()->paginate(12);
+        $collaborations->appends(['q' => request()->q]);
+
+        return inertia('landing/collaborations/index', [
+            'collaborations' => $collaborations,
+        ]);
+    }
+
     public function show($slug)
     {
         $collaboration = Collaboration::with(['technician', 'rateReviews'])->where('slug', $slug)->firstOrFail();

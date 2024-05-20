@@ -8,29 +8,28 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Header } from '@/components/header';
 import { TechnicianLayout } from '@/layouts/technician/technician-layout';
+import { Select } from '@radix-ui/react-select';
+// import { Select } from '@/components/select';
 
-export default function CollaborationCreate() {
+export default function CertificateCreate({ tags }) {
     const { errors } = usePage().props;
     const { data, setData, post, processing } = useForm({
+        certificate: null,
         name: '',
-        description: '',
-        price: '',
-        image: null,
     });
 
     const handleSubmit = (e) => {
+        console.log(data);
         e.preventDefault();
         const formData = new FormData();
+        formData.append('certificate', data.certificate);
         formData.append('name', data.name);
-        formData.append('description', data.description);
-        formData.append('price', data.price);
-        formData.append('image', data.image);
-        post(route('technician.collaborations.store'), formData);
+        post(route('technician.certificates.store'), formData);
     };
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
-        if (name === 'image') {
+        if (name === 'certificate') {
             setData(name, files[0]);
         } else {
             setData(name, value);
@@ -39,31 +38,20 @@ export default function CollaborationCreate() {
 
     return (
         <>
-            <Head title="Create Collaboration" />
+            <Head title="Create Certificate" />
             <Container>
-                <Header title={'Collaboration'} subtitle={'Create new Collaboration'}></Header>
+                <Header title={'Certificate'} subtitle={'Create new Certificate'}></Header>
                 <div className="px-4 py-6 sm:px-6 lg:p-8">
                     <form onSubmit={handleSubmit}>
                         <div className="mt-4">
-                            <Label htmlFor="name">Collaboration Name</Label>
+                            <Label htmlFor="name">name</Label>
                             <Input type="text" name="name" id="name" value={data.name} onChange={handleChange} />
                             {errors.name && <div className="text-sm text-red-500">{errors.name}</div>}
                         </div>
                         <div className="mt-4">
-                            <Label htmlFor="description">Description</Label>
-                            <Textarea name="description" id="description" value={data.description} onChange={handleChange} />
-                            {errors.description && <div className="text-sm text-red-500">{errors.description}</div>}
-                        </div>
-                        <div className="mt-4">
-                            <Label htmlFor="price">Price</Label>
-                            <Input type="number" name="price" id="price" value={data.price} onChange={handleChange} />
-                            {errors.price && <div className="text-sm text-red-500">{errors.price}</div>}
-                        </div>
-
-                        <div className="mt-4">
-                            <Label htmlFor="image">Collaboration Image</Label>
-                            <Input type="file" name="image" id="image" accept="image/*" onChange={handleChange} />
-                            {errors.image && <div className="text-sm text-red-500">{errors.image}</div>}
+                            <Label htmlFor="certificate">Certificate</Label>
+                            <Input type="file" name="certificate" id="certificate" onChange={handleChange} />
+                            {errors.certificate && <div className="text-sm text-red-500">{errors.certificate}</div>}
                         </div>
 
                         <div className="mt-4">
@@ -78,4 +66,4 @@ export default function CollaborationCreate() {
     );
 }
 
-CollaborationCreate.layout = (page) => <TechnicianLayout children={page} />;
+CertificateCreate.layout = (page) => <TechnicianLayout children={page} />;

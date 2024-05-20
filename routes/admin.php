@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('technicians/specialists/{slug}', [TechnicianController::class, 'manageSpecialist'])->name('technicians.manage-specialists');
         Route::resource('technicians', TechnicianController::class);
         Route::get('technicians/verified/{slug}', [TechnicianController::class, 'verified'])->name('technicians.verified');
+        Route::get('technicians/{slug}/certificates', [TechnicianController::class, 'certificates'])->name('technicians.certificates');
         Route::resource('users', UserController::class);
         Route::resource('admins', AdminController::class);
         Route::resource('products', ProductController::class);

@@ -13,7 +13,7 @@ import { UserLayout } from '@/layouts/user/user-layout';
 import Breadcrumb from '@/components/breadcrumb';
 import { Badge } from '@/components/ui/badge';
 
-export default function TransactionIndex() {
+export default function AppointmentIndex() {
     const { auth, appointments } = usePage().props;
 
     const { ask } = useSwal();
@@ -55,26 +55,16 @@ export default function TransactionIndex() {
                                                 <TableCell>
                                                     <Badge>{appointment.status}</Badge>
                                                 </TableCell>
-                                                {appointment.status == 'completed' && (
-                                                    <TableCell>
-                                                        <Link
-                                                            href={route('user.productreview.create', appointment.id)}
-                                                            className={buttonVariants({ size: 'sm', variant: 'default' })}
-                                                        >
-                                                            Rate & Review
-                                                        </Link>
-                                                    </TableCell>
-                                                )}
-                                                {/* <TableCell>
+                                                <TableCell>
                                                     <div className="flex gap-2">
                                                         <Link
-                                                            href={route('appointments.show', appointment.no_transaction)}
+                                                            href={route('user.appointments.show', appointment.id)}
                                                             className={buttonVariants({ size: 'sm', variant: 'default' })}
                                                         >
                                                             Details
                                                         </Link>
                                                     </div>
-                                                </TableCell> */}
+                                                </TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -90,4 +80,4 @@ export default function TransactionIndex() {
     );
 }
 
-TransactionIndex.layout = (page) => <UserLayout children={page} />;
+AppointmentIndex.layout = (page) => <UserLayout children={page} />;

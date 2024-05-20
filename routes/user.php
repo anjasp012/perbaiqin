@@ -9,6 +9,7 @@ use App\Http\Controllers\User\ConsultationController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ProductReviewController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\TechnicianReviewController;
 use App\Http\Controllers\User\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,7 @@ Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
         Route::post('transactions/{no_transaction}', [TransactionController::class, 'update'])->name('transactions.update');
 
         Route::post('transaction/product-review/{id}/{slug}', [ProductReviewController::class, 'store'])->name('productreview.store');
-        Route::post('transaction/collaboration-review/{id}/{slug}', [CollaborationReviewController::class, 'store'])->name('collaborationreview.store');
+        Route::post('collaboration-orders/collaboration-review/{id}/{slug}', [CollaborationReviewController::class, 'store'])->name('collaborationreview.store');
+        Route::post('appointment/technician-review/{id}', [TechnicianReviewController::class, 'store'])->name('technicianreview.store');
     });
 });

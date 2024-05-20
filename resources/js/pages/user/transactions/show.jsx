@@ -170,9 +170,7 @@ export default function TransactionIndex() {
                                                 <div className="font-bold">{transaction.payment_method}</div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="space-y-1 sm:col-span-3">
-                                        <div className="mb-3 grid grid-cols-1 items-center gap-x-4 gap-y-6 sm:grid-cols-7">
+                                        <div className="grid grid-cols-1 items-center gap-x-4 gap-y-6 sm:grid-cols-7">
                                             <div className="space-y-1 sm:col-span-2">
                                                 <label
                                                     className="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -183,22 +181,7 @@ export default function TransactionIndex() {
                                             </div>
                                             <div className="space-y-1 sm:col-span-1">:</div>
                                             <div className="space-y-1 sm:col-span-4">
-                                                <form onSubmit={handleSubmit}>
-                                                    <div className="flex gap-2">
-                                                        <select
-                                                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-foreground/70 focus-visible:outline-none focus-visible:ring-[0.20rem] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                                                            id="transaction_status"
-                                                            name="transaction_status"
-                                                            onChange={handleChange}
-                                                            value={data.transaction_status}
-                                                        >
-                                                            <option value="PROCES">PROCESS</option>
-                                                            <option value="ON DELIVERY">ON DELIVERY</option>
-                                                            <option value="SUCCESS">SUCCESS</option>
-                                                        </select>
-                                                        <Button type="submit">Update</Button>
-                                                    </div>
-                                                </form>
+                                                <div className="font-bold">{transaction.transaction_status}</div>
                                             </div>
                                         </div>
                                     </div>

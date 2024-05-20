@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Technician\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Technician;
+use App\Models\TechnicianCertificate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,18 +37,39 @@ class RegisterController extends Controller
             'phone' => 'required|numeric|digits_between:10,13',
             'price' => 'required|numeric',
             'agree' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            'address' => 'required',
+            'ktp' => 'required',
+            'ijazah' => 'required',
+            'certificates' => 'required|array'
         ]);
 
         $slug = Str::slug($request->name, '-');
+        $ktpPath = $request->file('ktp')->store('technicians/ktp');
+        $ijazahPath = $request->file('ijazah')->store('technicians/ijazah');
+
         $technician = Technician::create([
             'name' => $request->name,
-
             'slug' => $slug,
             'email' => $request->email,
             'phone' => $request->phone,
             'price' => $request->price,
+            'city' => $request->city,
+            'country' => $request->country,
+            'address' => $request->address,
+            'ktp' => $ktpPath,
+            'ijazah' => $ijazahPath,
             'password' => Hash::make($request->password),
         ]);
+
+        foreach ($request->certificates as $certificateFile) {
+            $certificate = new TechnicianCertificate();
+            $certificate->technician_id = $technician->id;
+            $certificate->name = pathinfo($certificateFile->getClientOriginalName(), PATHINFO_FILENAME);;
+            $certificate->certificate = $certificateFile->store('certificates');
+            $certificate->save();
+        }
 
         flashMessage('Success', 'Register as technician successfully', 'success');
         return redirect()->route('technician.login');

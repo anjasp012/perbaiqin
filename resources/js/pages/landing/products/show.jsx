@@ -12,7 +12,7 @@ import { Image } from '@/components/image';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 
 export default function ProductShow() {
-    const { auth, products, product, reviews } = usePage().props;
+    const { auth, products, product, reviews, vendor } = usePage().props;
 
     console.log(product);
 
@@ -52,36 +52,61 @@ export default function ProductShow() {
                                             src={`${product.image}`}
                                         ></Image>
                                     </div>
-                                    <div className="mt-6 flex flex-col md:mt-0">
-                                        <h1 className="mt-2 text-3xl font-semibold leading-none tracking-tight lg:text-4xl">{product.name}</h1>
-                                        <p className="my-3 text-sm text-red-600">{product.vendor.name}</p>
-                                        <p className="text-2xl font-semibold lg:text-3xl">{formatRupiah(product.price)}</p>
-                                        <div className="mt-4 text-sm leading-relaxed tracking-tighter text-muted-foreground lg:text-base">
-                                            {product.description}
+                                    <div className="mt-6 flex h-full w-full flex-col justify-between md:mt-0">
+                                        <div>
+                                            <h1 className="mt-2 text-3xl font-semibold leading-none tracking-tight lg:text-4xl">{product.name}</h1>
+                                            <p className="my-3 text-sm text-red-600">{product.vendor.name}</p>
+                                            <p className="text-2xl font-semibold lg:text-3xl">{formatRupiah(product.price)}</p>
+                                            <div className="mt-4 text-sm leading-relaxed tracking-tighter text-muted-foreground lg:text-base">
+                                                {product.description}
+                                            </div>
+                                            <div className="mt-6 grid grid-cols-2 gap-2">
+                                                <form onSubmit={addToCartHandler} className="w-full">
+                                                    <Button type="submit">
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="24"
+                                                            height="24"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            className="mr-2"
+                                                        >
+                                                            <path
+                                                                stroke="currentColor"
+                                                                strokeLinecap="round"
+                                                                stroke:inejoin="round"
+                                                                strokeWidth="1.5"
+                                                                d="M15.25 7.75V6a3.25 3.25 0 0 0-6.5 0v1.75m3.5 13.5H5.409a1 1 0 0 1-.99-1.146l1.705-11.5a1 1 0 0 1 .989-.854h9.774a1 1 0 0 1 .99.853l.65 4.397m-.277 3.25v3m0 0v3m0-3h-3m3 0h3"
+                                                            ></path>
+                                                        </svg>
+                                                        Add to Cart
+                                                    </Button>
+                                                    {/* <Button type="submit">Search</Button> */}
+                                                </form>
+                                            </div>
                                         </div>
-                                        <div className="mt-6 grid grid-cols-2 gap-2">
-                                            <form onSubmit={addToCartHandler} className="w-full">
-                                                <Button type="submit">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="24"
-                                                        height="24"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                        className="mr-2"
-                                                    >
-                                                        <path
-                                                            stroke="currentColor"
-                                                            strokeLinecap="round"
-                                                            stroke:inejoin="round"
-                                                            strokeWidth="1.5"
-                                                            d="M15.25 7.75V6a3.25 3.25 0 0 0-6.5 0v1.75m3.5 13.5H5.409a1 1 0 0 1-.99-1.146l1.705-11.5a1 1 0 0 1 .989-.854h9.774a1 1 0 0 1 .99.853l.65 4.397m-.277 3.25v3m0 0v3m0-3h-3m3 0h3"
-                                                        ></path>
-                                                    </svg>
-                                                    Add to Cart
-                                                </Button>
-                                                {/* <Button type="submit">Search</Button> */}
-                                            </form>
+                                        <div className="rounded-lg bg-gray-200 px-2 py-2 text-sm text-gray-500 dark:bg-gray-700 dark:text-gray-300">
+                                            <h6 className="mb-3 border-b pb-2 text-sm font-bold">Vendor Information</h6>
+                                            <div className="grid grid-cols-12 text-sm">
+                                                <div className="col-span-3">Phone</div>
+                                                <div className="col-span-1">:</div>
+                                                <div className="col-span-8">{vendor.phone}</div>
+                                            </div>
+                                            <div className="grid grid-cols-12 text-sm">
+                                                <div className="col-span-3">City</div>
+                                                <div className="col-span-1">:</div>
+                                                <div className="col-span-8">{vendor.city}</div>
+                                            </div>
+                                            <div className="grid grid-cols-12 text-sm">
+                                                <div className="col-span-3">Country</div>
+                                                <div className="col-span-1">:</div>
+                                                <div className="col-span-8">{vendor.city}</div>
+                                            </div>
+                                            <div className="grid grid-cols-12 text-sm">
+                                                <div className="col-span-3">Address</div>
+                                                <div className="col-span-1">:</div>
+                                                <div className="col-span-8">{vendor.address}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

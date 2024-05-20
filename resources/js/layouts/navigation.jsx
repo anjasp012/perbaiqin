@@ -243,7 +243,7 @@ const navLinks = [
     { label: 'Appointments', route: 'landing.appointments.index' },
     { label: 'QuickLearn Videos', route: 'landing.videos.index' },
     { label: 'Products', route: 'landing.products.index' },
-    { label: 'Collaboration Fix Up', route: 'landing.products.index' },
+    { label: 'Collaboration Fix Up', route: 'landing.collaborations.index' },
 ];
 
 export function NavLink({ active, children, href }) {

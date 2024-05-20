@@ -1,35 +1,57 @@
 import { useEffect, useState } from 'react';
 import { InputError } from '@/components/input-error';
-import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { AuthLayout } from '@/layouts/auth-layout';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function VendorRegister({}) {
     //state user
 
-    const { errors, processing } = usePage().props;
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
-    const [agree, setAgree] = useState('');
+    const { errors } = usePage().props;
+    const { data, setData, post, processing } = useForm({
+        fullName: '',
+        name: '',
+        email: '',
+        phone: '',
+        city: '',
+        country: '',
+        address: '',
+        ktp: null,
+        password: '',
+        password_confirmation: '',
+        agree: '',
+    });
+
+    const handleChange = (e) => {
+        const { name, value, files } = e.target;
+        if (name === 'ktp') {
+            setData(name, files[0]);
+        } else {
+            setData(name, value);
+            console.log(name);
+        }
+    };
+
     //function "registerHandler"
     const registerHandler = async (e) => {
         e.preventDefault();
-
-        //register
-        router.post(route('vendor.register.store'), {
-            name: name,
-            email: email,
-            phone: phone,
-            password: password,
-            password_confirmation: passwordConfirmation,
-            agree: agree,
-        });
+        const formData = new FormData();
+        formData.append('fullName', data.fullName);
+        formData.append('name', data.name);
+        formData.append('email', data.email);
+        formData.append('phone', data.phone);
+        formData.append('ktp', data.ktp);
+        formData.append('city', data.city);
+        formData.append('country', data.country);
+        formData.append('address', data.address);
+        formData.append('password', data.password);
+        formData.append('password_confirmation', data.password_confirmation);
+        formData.append('agree', data.agree);
+        post(route('vendor.register.store'), formData);
     };
 
     return (
@@ -66,16 +88,31 @@ export default function VendorRegister({}) {
                                             <form onSubmit={registerHandler}>
                                                 <div className="grid gap-2">
                                                     <div className="grid gap-1">
-                                                        <Label htmlFor="name">Vendor Name</Label>
+                                                        <Label htmlFor="fullName">Full Name</Label>
+                                                        <Input
+                                                            id="fullName"
+                                                            type="text"
+                                                            name="fullName"
+                                                            value={data.fullName}
+                                                            className="mt-1 block w-full"
+                                                            autoComplete="fullName"
+                                                            autoFocus
+                                                            onChange={handleChange}
+                                                        />
+
+                                                        <InputError message={errors.fullName} className="mt-2" />
+                                                    </div>
+                                                    <div className="grid gap-1">
+                                                        <Label htmlFor="name">Store Name</Label>
                                                         <Input
                                                             id="name"
                                                             type="text"
                                                             name="name"
-                                                            value={name}
+                                                            value={data.name}
                                                             className="mt-1 block w-full"
                                                             autoComplete="name"
                                                             autoFocus
-                                                            onChange={(e) => setName(e.target.value)}
+                                                            onChange={handleChange}
                                                         />
 
                                                         <InputError message={errors.name} className="mt-2" />
@@ -86,14 +123,75 @@ export default function VendorRegister({}) {
                                                             id="phone"
                                                             type="number"
                                                             name="phone"
-                                                            value={phone}
+                                                            value={data.phone}
                                                             className="mt-1 block w-full"
                                                             autoComplete="phone"
                                                             autoFocus
-                                                            onChange={(e) => setPhone(e.target.value)}
+                                                            onChange={handleChange}
                                                         />
 
                                                         <InputError message={errors.phone} className="mt-2" />
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-2">
+                                                        <div className="grid gap-1">
+                                                            <Label htmlFor="city">City</Label>
+                                                            <Input
+                                                                id="city"
+                                                                type="text"
+                                                                name="city"
+                                                                value={data.city}
+                                                                className="mt-1 block w-full"
+                                                                autoComplete="city"
+                                                                autoFocus
+                                                                onChange={handleChange}
+                                                            />
+
+                                                            <InputError message={errors.city} className="mt-2" />
+                                                        </div>
+                                                        <div className="grid gap-1">
+                                                            <Label htmlFor="country">Country</Label>
+                                                            <Input
+                                                                id="country"
+                                                                type="text"
+                                                                name="country"
+                                                                value={data.country}
+                                                                className="mt-1 block w-full"
+                                                                autoComplete="country"
+                                                                autoFocus
+                                                                onChange={handleChange}
+                                                            />
+
+                                                            <InputError message={errors.country} className="mt-2" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid gap-1">
+                                                        <Label htmlFor="address">Address</Label>
+                                                        <Textarea
+                                                            id="address"
+                                                            type="text"
+                                                            name="address"
+                                                            value={data.address}
+                                                            className="mt-1 block w-full"
+                                                            autoComplete="address"
+                                                            autoFocus
+                                                            onChange={handleChange}
+                                                        />
+
+                                                        <InputError message={errors.address} className="mt-2" />
+                                                    </div>
+                                                    <div className="grid gap-1">
+                                                        <Label htmlFor="ktp">Ktp</Label>
+                                                        <Input
+                                                            id="ktp"
+                                                            type="file"
+                                                            name="ktp"
+                                                            className="mt-1 block w-full"
+                                                            autoComplete="ktp"
+                                                            autoFocus
+                                                            onChange={handleChange}
+                                                        />
+
+                                                        <InputError message={errors.ktp} className="mt-2" />
                                                     </div>
                                                     <div className="grid gap-1">
                                                         <Label htmlFor="email">Email</Label>
@@ -101,11 +199,11 @@ export default function VendorRegister({}) {
                                                             id="email"
                                                             type="email"
                                                             name="email"
-                                                            value={email}
+                                                            value={data.email}
                                                             className="mt-1 block w-full"
                                                             autoComplete="email"
                                                             autoFocus
-                                                            onChange={(e) => setEmail(e.target.value)}
+                                                            onChange={handleChange}
                                                         />
 
                                                         <InputError message={errors.email} className="mt-2" />
@@ -117,10 +215,10 @@ export default function VendorRegister({}) {
                                                             id="password"
                                                             type="password"
                                                             name="password"
-                                                            value={password}
+                                                            value={data.password}
                                                             className="mt-1 block w-full"
                                                             autoComplete="current-password"
-                                                            onChange={(e) => setPassword(e.target.value)}
+                                                            onChange={handleChange}
                                                         />
                                                         {errors.password && <InputError message={errors.password} className="mt-2" />}
                                                     </div>
@@ -132,17 +230,17 @@ export default function VendorRegister({}) {
                                                             id="password_confirmation"
                                                             type="password"
                                                             name="password_confirmation"
-                                                            value={passwordConfirmation}
+                                                            value={data.password_confirmation}
                                                             className="mt-1 block w-full"
                                                             autoComplete="current-password"
-                                                            onChange={(e) => setPasswordConfirmation(e.target.value)}
+                                                            onChange={handleChange}
                                                         />
 
-                                                        {errors.passwordConfirmation && <InputError message={errors.passwordConfirmation} className="mt-2" />}
+                                                        {errors.password_confirmation && <InputError message={errors.password_confirmation} className="mt-2" />}
                                                     </div>
                                                     <div className="mt-2 flex items-center justify-between">
                                                         <label className="flex items-center">
-                                                            <Checkbox defaultChecked={false} name="agree" onCheckedChange={(e) => setAgree(e)} />
+                                                            <Checkbox defaultChecked={false} name="agree" onCheckedChange={(e) => setData('agree', e)} />
                                                             <span className="ml-2 select-none text-sm text-muted-foreground">Agree with terms</span>
                                                         </label>
                                                         {errors.agree && <InputError message={errors.agree} className="mt-2" />}

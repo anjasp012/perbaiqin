@@ -12,8 +12,11 @@ import { Textarea } from '@/components/ui/textarea';
 
 const EditProfile = ({ vendor }) => {
     const { data, setData, errors, post } = useForm({
+        fullName: vendor.full_name,
         name: vendor.name,
         phone: vendor.phone,
+        city: vendor.city,
+        country: vendor.country,
         address: vendor.address,
         image: null,
         _method: 'PUT',
@@ -50,7 +53,12 @@ const EditProfile = ({ vendor }) => {
                         <CardContent>
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
-                                    <Label htmlFor="name">Name:</Label>
+                                    <Label htmlFor="fullName">Full Name:</Label>
+                                    <Input type="text" id="fullName" name="fullName" value={data.fullName} onChange={handleChange} />
+                                    {errors.fullName && <div className="text-red-500">{errors.fullName}</div>}
+                                </div>
+                                <div className="mb-3">
+                                    <Label htmlFor="name">Store Name:</Label>
                                     <Input type="text" id="name" name="name" value={data.name} onChange={handleChange} />
                                     {errors.name && <div className="text-red-500">{errors.name}</div>}
                                 </div>
@@ -58,6 +66,18 @@ const EditProfile = ({ vendor }) => {
                                     <Label htmlFor="phone"> Phone Number:</Label>
                                     <Input type="text" id="phone" name="phone" value={data.phone} onChange={handleChange} />
                                     {errors.phone && <div className="text-red-500">{errors.phone}</div>}
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div className="mb-3">
+                                        <Label htmlFor="city"> City:</Label>
+                                        <Input type="text" id="city" name="city" value={data.city} onChange={handleChange} />
+                                        {errors.city && <div className="text-red-500">{errors.city}</div>}
+                                    </div>
+                                    <div className="mb-3">
+                                        <Label htmlFor="country"> Country:</Label>
+                                        <Input type="text" id="country" name="country" value={data.country} onChange={handleChange} />
+                                        {errors.country && <div className="text-red-500">{errors.country}</div>}
+                                    </div>
                                 </div>
                                 <div className="mb-3">
                                     <Label htmlFor="address"> Address:</Label>

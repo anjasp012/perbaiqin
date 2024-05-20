@@ -8,25 +8,20 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Pagination from '@/shared/pagination';
-import { User as UserIcon } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { formatDateTime } from '@/lib/utils';
 import useSwal from '@/hooks/useSwal';
+import { AdminLayout } from '@/layouts/admin-layout';
 
-const CertificateIndex = ({ certificates }) => {
+const CertificateIndex = ({ certificates, technician }) => {
     const { ask } = useSwal();
     return (
         <Container>
             <Head title="Certificates"></Head>
-            <Header title={`Technician Certificates`} subtitle={'Certificates'} />
+            <Header title={`${technician.name} Certificates`} subtitle={'Certificates'} />
             <div className="mt-5">
                 <div className="px-4 py-6 sm:px-6 lg:p-8">
                     <div className="mb-8 flex items-center justify-between">
-                        <Search URL={route('technician.certificates.index')} />
-                        <Link href={route('technician.certificates.create')}>
-                            <Button variant="default">Upload New Certificates</Button>
-                        </Link>
+                        <Search URL={route('admin.technicians.certificates', technician.slug)} />
                     </div>
                     <Card className="border-none">
                         <CardHeader></CardHeader>
@@ -87,4 +82,4 @@ const CertificateIndex = ({ certificates }) => {
 };
 
 export default CertificateIndex;
-CertificateIndex.layout = (page) => <TechnicianLayout children={page} />;
+CertificateIndex.layout = (page) => <AdminLayout children={page} />;

@@ -17,6 +17,11 @@ class Technician extends Authenticatable
         return $this->hasMany(Consultation::class);
     }
 
+    public function certificates()
+    {
+        return $this->hasMany(TechnicianCertificate::class);
+    }
+
     public function consultationMessages()
     {
         return $this->hasMany(ConsultationMessage::class);
@@ -25,6 +30,11 @@ class Technician extends Authenticatable
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(TechnicianReview::class);
     }
 
     public function specialists()

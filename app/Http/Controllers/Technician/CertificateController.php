@@ -15,7 +15,7 @@ class CertificateController extends Controller
         $technician = Auth::guard('technician')->user();
         $certificates = TechnicianCertificate::where('technician_id', $technician->id)
             ->when(request()->q, function ($query) {
-                $query->where('name', 'like', '%' . request()->q . '%');
+                $query->where('certificate', 'like', '%' . request()->q . '%');
             })
             ->latest()
             ->paginate(10);
@@ -35,14 +35,12 @@ class CertificateController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
             'certificate' => 'required|file|mimes:pdf|max:2048', // assuming certificate is a file (PDF) with max size 2048KB
         ]);
 
         $technician = Auth::guard('technician')->user();
         $certificate = new TechnicianCertificate();
         $certificate->technician_id = $technician->id;
-        $certificate->name = $request->name;
 
         // Upload the certificate file
         $certificateFile = $request->file('certificate');
@@ -65,7 +63,6 @@ class CertificateController extends Controller
     public function update(Request $request, TechnicianCertificate $certificate)
     {
         $request->validate([
-            'name' => 'required',
             'certificate' => 'nullable|file|mimes:pdf|max:2048', // assuming certificate is a file (PDF) with max size 2048KB
         ]);
 
@@ -75,8 +72,6 @@ class CertificateController extends Controller
         if ($certificate->technician_id !== $technician->id) {
             abort(403); // Tampilkan halaman larangan akses jika bukan pemilik sertifikat
         }
-
-        $certificate->name = $request->name;
 
         // Update the certificate file if provided
         if ($request->hasFile('certificate')) {

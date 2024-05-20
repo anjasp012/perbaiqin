@@ -25,10 +25,12 @@ class ProductController extends Controller
         $product = Product::with(['vendor', 'rateReviews'])->where('slug', $slug)->firstOrFail();
         $reviews = $product->rateReviews;
         $products = Product::with('vendor')->where('id', '!=', $product->id)->take(4)->get();
+        $vendor = $product->vendor;
         return inertia('landing/products/show', [
             'product' => $product,
             'reviews' => $reviews,
             'products' => $products,
+            'vendor' => $vendor,
         ]);
     }
 }

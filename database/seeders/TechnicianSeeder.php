@@ -45,6 +45,7 @@ class TechnicianSeeder extends Seeder
             $password = Hash::make('password');
             $phone = $faker->phoneNumber;
             $price = $faker->randomNumber(6);
+            $address = $faker->address;
 
             // Insert technician
             $technicianId = DB::table('technicians')->insertGetId([
@@ -53,6 +54,11 @@ class TechnicianSeeder extends Seeder
                 'email' => $email,
                 'password' => $password,
                 'phone' => $phone,
+                'ktp' => 'ktp-',
+                'ijazah' => 'ijazah-',
+                'city' => 'city-',
+                'country' => 'country-',
+                'address' => $address,
                 'price' => $price,
                 'created_at' => now(),
                 'updated_at' => now(),

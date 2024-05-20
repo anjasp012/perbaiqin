@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -20,9 +21,13 @@ class VendorSeeder extends Seeder
         for ($i = 1; $i <= 10; $i++) {
             $vendor = [
                 'name' => $faker->company,
+                'full_name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
                 'password' => Hash::make('password'), // Default password is 'password'
                 'phone' => $faker->phoneNumber,
+                'ktp' => 'ktp-',
+                'city' => 'city-',
+                'country' => 'country-',
                 'address' => $faker->address,
                 'image' => 'vendor' . $i . '.jpg', // Assuming you have images named vendor1.jpg, vendor2.jpg, etc.
                 'created_at' => now(),

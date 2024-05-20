@@ -47,7 +47,11 @@ class AppointmentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $appointment = Appointment::with(['technician'])->findOrFail($id);
+        // dd($appointment);
+        return inertia('user/appointments/show', [
+            'appointment' => $appointment
+        ]);
     }
 
     /**

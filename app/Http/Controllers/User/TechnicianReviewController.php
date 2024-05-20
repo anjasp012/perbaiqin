@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\Consultation;
 use App\Models\Technician;
 use App\Models\TechnicianReview;
@@ -12,27 +13,21 @@ use PhpParser\Node\Const_;
 
 class TechnicianReviewController extends Controller
 {
-    public function create($id)
-    {
-        $technician = Technician::findOrFail($id);
-        return inertia('user/technician/ratereview', [
-            'technician' => $technician,
-        ]);
-    }
-
     public function store(Request $request, $id)
     {
-        $consultation = Consultation::findOrFail($id);
-        $technician = Technician::findOrFail($consultation->id);
+        $appointment = Appointment::findOrFail($id);
         $technicianReview = new TechnicianReview();
-        $technicianReview->consultation_id = $technician->id;
         $technicianReview->user_id = Auth::id();
-        $technicianReview->technician_id = $technician->id;
+        $technicianReview->technician_id = $appointment->technician_id;
         $technicianReview->rate = $request->rate;
         $technicianReview->review = $request->review;
         $technicianReview->save();
 
+        $appointment->update([
+            'reviewed' => true
+        ]);
+
         flashMessage('success', 'Rate & Review created successfully.');
-        return redirect()->route('user.appointment.show', $id);
+        return redirect()->route('user.appointments.show', $id);
     }
 }

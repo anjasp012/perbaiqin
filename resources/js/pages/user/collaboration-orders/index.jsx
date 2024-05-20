@@ -13,7 +13,7 @@ import { UserLayout } from '@/layouts/user/user-layout';
 import Breadcrumb from '@/components/breadcrumb';
 import { Badge } from '@/components/ui/badge';
 
-export default function TransactionIndex() {
+export default function TransactionCollaborationIndex() {
     const { auth, transactions } = usePage().props;
 
     const { ask } = useSwal();
@@ -22,7 +22,7 @@ export default function TransactionIndex() {
             <Head title="Transaction" />
             <Container>
                 <>
-                    <Header title={'Transactions History'} subtitle={`Manage transactions history`}></Header>
+                    <Header title={'Collaboration Order History'} subtitle={`Manage collaboration order history`}></Header>
                     <div className="px-4 py-6 sm:px-6 lg:p-8">
                         <div className="mb-8 flex justify-between">
                             <h2 className="text-lg font-bold">Transactions History</h2>
@@ -37,7 +37,6 @@ export default function TransactionIndex() {
                                             <TableHead>Transaction Idx</TableHead>
                                             <TableHead>Total Price</TableHead>
                                             <TableHead>Payment Method</TableHead>
-                                            <TableHead>Status</TableHead>
                                             <TableHead>Transaction Date</TableHead>
                                             <TableHead>Technician</TableHead>
                                             <TableHead>Actions</TableHead>
@@ -49,10 +48,6 @@ export default function TransactionIndex() {
                                                 <TableCell>{transaction.no_transaction_collaboration}</TableCell>
                                                 <TableCell>{formatRupiah(transaction.total_price)}</TableCell>
                                                 <TableCell>{transaction.payment_method}</TableCell>
-
-                                                <TableCell>
-                                                    <Badge>{transaction.transaction_collaboration_status}</Badge>
-                                                </TableCell>
                                                 <TableCell>{transaction.created_at}</TableCell>
                                                 <TableCell>{transaction.technician.name}</TableCell>
                                                 <TableCell>
@@ -80,4 +75,4 @@ export default function TransactionIndex() {
     );
 }
 
-TransactionIndex.layout = (page) => <UserLayout children={page} />;
+TransactionCollaborationIndex.layout = (page) => <UserLayout children={page} />;

@@ -29,7 +29,7 @@ class AppointmentController extends Controller
 
     public function update(Request $request, $id)
     {
-        $appointment = Appointment::find($id)->firstOrFail();
+        $appointment = Appointment::findOrFail($id);
         $appointment->status = $request->status;
         $appointment->save();
 

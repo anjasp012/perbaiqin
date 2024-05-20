@@ -1,56 +1,59 @@
-import React, { useState } from 'react';
-import { Head, usePage, useForm, router } from '@inertiajs/react';
-import { DashLayout } from '@/layouts/dash-layout';
+import React from 'react';
+import { Head, useForm } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import { Container } from '@/components/container';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { VendorLayout } from '@/layouts/vendor/vendor-layout';
 import { Header } from '@/components/header';
+import { TechnicianLayout } from '@/layouts/technician/technician-layout';
 
-export default function ProductEdit() {
-    const { product, errors } = usePage().props;
+export default function CollaborationEdit({ collaboration }) {
+    const { errors } = usePage().props;
     const { data, setData, post, processing } = useForm({
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        image: '',
+        name: collaboration.name,
+        description: collaboration.description,
+        price: collaboration.price,
+        image: null,
         _method: 'PUT',
     });
 
-    const handleChange = (e) => {
-        const { name, value, files } = e.target;
-
-        if (name === 'image') {
-            setData('image', files[0]); // Simpan file image
-        } else {
-            setData(name, value); // Simpan nilai input dalam objek data
-        }
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('vendor.products.update', product.slug));
+        const formData = new FormData();
+        formData.append('name', data.name);
+        formData.append('description', data.description);
+        formData.append('price', data.price);
+        formData.append('image', data.image);
+        formData.append('_method', data._method);
+        post(route('technician.collaborations.update', collaboration.slug), formData);
+    };
+
+    const handleChange = (e) => {
+        const { name, value, files } = e.target;
+        if (name === 'image') {
+            setData(name, files[0]);
+        } else {
+            setData(name, value);
+        }
     };
 
     return (
         <>
-            <Head title={`Edit ${product.name}`} />
+            <Head title="Edit Collaboration" />
             <Container>
-                <Header title={product.name} subtitle={'Edit Product'}/>
+                <Header title={'Collaboration'} subtitle={'Edit Collaboration'}></Header>
                 <div className="px-4 py-6 sm:px-6 lg:p-8">
-                    
                     <form onSubmit={handleSubmit}>
                         <div className="mt-4">
-                            <Label htmlFor="name">Product Name</Label>
+                            <Label htmlFor="name">Collaboration Name</Label>
                             <Input type="text" name="name" id="name" value={data.name} onChange={handleChange} />
                             {errors.name && <div className="text-sm text-red-500">{errors.name}</div>}
                         </div>
                         <div className="mt-4">
                             <Label htmlFor="description">Description</Label>
-                            <Textarea type="text" name="description" id="description" value={data.description} onChange={handleChange} />
+                            <Textarea name="description" id="description" value={data.description} onChange={handleChange} />
                             {errors.description && <div className="text-sm text-red-500">{errors.description}</div>}
                         </div>
                         <div className="mt-4">
@@ -58,11 +61,13 @@ export default function ProductEdit() {
                             <Input type="number" name="price" id="price" value={data.price} onChange={handleChange} />
                             {errors.price && <div className="text-sm text-red-500">{errors.price}</div>}
                         </div>
+
                         <div className="mt-4">
-                            <Label htmlFor="image">Product Image</Label>
+                            <Label htmlFor="image">Collaboration Image</Label>
                             <Input type="file" name="image" id="image" accept="image/*" onChange={handleChange} />
                             {errors.image && <div className="text-sm text-red-500">{errors.image}</div>}
                         </div>
+
                         <div className="mt-4">
                             <Button type="submit" disabled={processing}>
                                 {processing ? 'Processing...' : 'Update'}
@@ -75,4 +80,4 @@ export default function ProductEdit() {
     );
 }
 
-ProductEdit.layout = (page) => <VendorLayout children={page} />;
+CollaborationEdit.layout = (page) => <TechnicianLayout children={page} />;
