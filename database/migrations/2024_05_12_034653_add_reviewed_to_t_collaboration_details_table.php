@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('t_collaboration_details', function (Blueprint $table) {
-            $table->boolean('reviewed');
+            $table->boolean('reviewed')->default(false);
         });
     }
 

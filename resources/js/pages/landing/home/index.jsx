@@ -75,7 +75,7 @@ export default function Home({ products, specialists, collaborations }) {
                                         <div className="mt-2 flex justify-center text-center">QuickLearn Videos</div>
                                     </Card>
                                 </Link>
-                                <Link href={route('landing.products.index')} className="text-xs font-bold sm:text-sm">
+                                <Link href={route('landing.collaborations.index')} className="text-xs font-bold sm:text-sm">
                                     <Card className="p-4">
                                         <div className="flex justify-center">
                                             <Avatar className="h-8 w-8 md:h-20 md:w-20">
