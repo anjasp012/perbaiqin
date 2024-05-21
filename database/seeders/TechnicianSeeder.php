@@ -35,45 +35,45 @@ class TechnicianSeeder extends Seeder
         }
 
         // Define faker instance
-        $faker = Faker::create();
-        $city = ['Jakarta', 'Bandung', 'Solo', 'Yogyakarta'];
+        // $faker = Faker::create();
+        // $city = ['Jakarta', 'Bandung', 'Solo', 'Yogyakarta'];
         // Generate fake technicians
-        for ($i = 0; $i < 50; $i++) {
-            $name = $faker->name;
-            $slug = Str::slug($name);
-            $email = $faker->unique()->safeEmail;
-            $password = Hash::make('password');
-            $phone = $faker->phoneNumber;
-            $price = $faker->randomNumber(6);
-            $address = $faker->address;
+        // for ($i = 0; $i < 50; $i++) {
+        //     $name = $faker->name;
+        //     $slug = Str::slug($name);
+        //     $email = $faker->unique()->safeEmail;
+        //     $password = Hash::make('password');
+        //     $phone = $faker->phoneNumber;
+        //     $price = $faker->randomNumber(6);
+        //     $address = $faker->address;
 
-            // Insert technician
-            $technicianId = DB::table('technicians')->insertGetId([
-                'name' => $name,
-                'slug' => $slug,
-                'email' => $email,
-                'password' => $password,
-                'phone' => $phone,
-                'ktp' => 'ktp-',
-                'ijazah' => 'ijazah-',
-                'city' => $city[rand(0, 3)],
-                'country' => 'Indonesia',
-                'address' => $address,
-                'price' => $price,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        //     // Insert technician
+        //     $technicianId = DB::table('technicians')->insertGetId([
+        //         'name' => $name,
+        //         'slug' => $slug,
+        //         'email' => $email,
+        //         'password' => $password,
+        //         'phone' => $phone,
+        //         'ktp' => 'ktp-',
+        //         'ijazah' => 'ijazah-',
+        //         'city' => $city[rand(0, 3)],
+        //         'country' => 'Indonesia',
+        //         'address' => $address,
+        //         'price' => $price,
+        //         'created_at' => now(),
+        //         'updated_at' => now(),
+        //     ]);
 
-            // Attach random specialties to the technician
-            $randomSpecialties = collect($specialties)->random(rand(1, count($specialties)));
-            foreach ($randomSpecialties as $specialty) {
-                DB::table('technician_specialists')->insert([
-                    'technician_id' => $technicianId,
-                    'specialist_id' => $specialtyId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-        }
+        //     // Attach random specialties to the technician
+        //     $randomSpecialties = collect($specialties)->random(rand(1, count($specialties)));
+        //     foreach ($randomSpecialties as $specialty) {
+        //         DB::table('technician_specialists')->insert([
+        //             'technician_id' => $technicianId,
+        //             'specialist_id' => $specialtyId,
+        //             'created_at' => now(),
+        //             'updated_at' => now(),
+        //         ]);
+        //     }
+        // }
     }
 }
