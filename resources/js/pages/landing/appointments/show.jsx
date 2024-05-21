@@ -29,7 +29,7 @@ export default function AppointmentShow({ technician, reviews }) {
                 setSelectedDate('');
                 setSelectedTime('');
                 swal.fire('Success!', response.data.message, 'success').then(() => {
-                    window.location.href = route('dashboard');
+                    window.location.href = route('user.appointments.index');
                 });
             })
             .catch((error) => {
@@ -89,7 +89,7 @@ export default function AppointmentShow({ technician, reviews }) {
                                     <div className="grid grid-cols-12 text-sm">
                                         <div className="col-span-3">Country</div>
                                         <div className="col-span-1">:</div>
-                                        <div className="col-span-8">{technician.city}</div>
+                                        <div className="col-span-8">{technician.country}</div>
                                     </div>
                                     <div className="grid grid-cols-12 text-sm">
                                         <div className="col-span-3">Address</div>

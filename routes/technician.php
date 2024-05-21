@@ -44,6 +44,7 @@ Route::group(['prefix' => 'technician', 'namespace' => 'Technician', 'as' => 'te
         Route::put('consultations/{id}', [ConsultationController::class, 'update'])->name('consultations.update');
         Route::get('appointments', [AppointmentController::class, 'index'])->name('appointments.index');
         Route::put('appointments/update/{id}', [AppointmentController::class, 'update'])->name('appointments.update');
+        Route::put('appointments/uploadVideo/{id}', [AppointmentController::class, 'uploadVideo'])->name('appointments.uploadVideo');
 
         Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
         Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificates.create');

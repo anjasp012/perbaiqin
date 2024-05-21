@@ -17,6 +17,7 @@ class VendorSeeder extends Seeder
     {
         $faker = Faker::create();
 
+        $city = ['Jakarta', 'Bandung', 'Solo', 'Yogyakarta'];
         // Create vendors
         for ($i = 1; $i <= 10; $i++) {
             $vendor = [
@@ -26,8 +27,8 @@ class VendorSeeder extends Seeder
                 'password' => Hash::make('password'), // Default password is 'password'
                 'phone' => $faker->phoneNumber,
                 'ktp' => 'ktp-',
-                'city' => 'city-',
-                'country' => 'country-',
+                'city' => $city[rand(0, 3)],
+                'country' => 'Indonesia',
                 'address' => $faker->address,
                 'image' => 'vendor' . $i . '.jpg', // Assuming you have images named vendor1.jpg, vendor2.jpg, etc.
                 'created_at' => now(),

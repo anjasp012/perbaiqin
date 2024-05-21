@@ -117,7 +117,15 @@ export default function AppointmentShow() {
                                             </div>
                                         </div>
                                     </div>
-                                    {appointment.status == 'completed' && appointment.video ? '' : 'belum ada video '}
+                                    {appointment.status == 'completed' && appointment.video ? (
+                                        <div className="w-5/12">
+                                            <video className="mb-4 aspect-video w-full rounded-lg" controls>
+                                                <source src={`/storage/${appointment.video}`} type="video/mp4" />
+                                            </video>
+                                        </div>
+                                    ) : (
+                                        'belum ada video '
+                                    )}
                                 </div>
                             </CardContent>
                         </Card>

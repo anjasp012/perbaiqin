@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('postal_code');
             $table->string('total_price');
             $table->string('payment_method');
-            $table->string('transaction_collaborationn_status');
+            // $table->string('transaction_collaborationn_status');
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
         <Card key={product.id}>
             <Link href={route('landing.products.show', product.slug)}>
                 <CardHeader>
-                    <CardTitle>{product.name}</CardTitle>
+                    <CardTitle className="text-xl">{product.name}</CardTitle>
                     <CardDescription>
                         <p className="mb-3">{product.vendor.name}</p>
                         <Badge>{formatRupiah(product.price)}</Badge>

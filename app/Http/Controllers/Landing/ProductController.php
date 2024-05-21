@@ -10,13 +10,31 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('vendor')->when(request()->q, function ($products) {
-            $products = $products->where('name', 'like', '%' . request()->q . '%');
-        })->latest()->paginate(12);
+        $products = Product::with('vendor')
+            ->when(request()->q, function ($query) {
+                $query->where('name', 'like', '%' . request()->q . '%');
+            })
+            ->when(request()->cities, function ($query) {
+                $query->whereHas('vendor', function ($vendorQuery) {
+                    $vendorQuery->whereIn('city', request()->cities);
+                });
+            })
+            ->latest()
+            ->paginate(12);
+        $cities = Product::with('vendor')
+            ->get()
+            ->groupBy(function ($product) {
+                return $product->vendor->city;
+            })
+            ->keys();
+        $citySelected = request()->cities ?? [];
+        $query = request()->q;
         $products->appends(['q' => request()->q]);
-
         return inertia('landing/products/index', [
             'products' => $products,
+            'cities' => $cities,
+            'citySelected' => $citySelected,
+            'query' => $query,
         ]);
     }
 

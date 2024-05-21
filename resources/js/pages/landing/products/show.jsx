@@ -100,7 +100,7 @@ export default function ProductShow() {
                                             <div className="grid grid-cols-12 text-sm">
                                                 <div className="col-span-3">Country</div>
                                                 <div className="col-span-1">:</div>
-                                                <div className="col-span-8">{vendor.city}</div>
+                                                <div className="col-span-8">{vendor.country}</div>
                                             </div>
                                             <div className="grid grid-cols-12 text-sm">
                                                 <div className="col-span-3">Address</div>

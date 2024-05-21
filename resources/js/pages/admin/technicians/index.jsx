@@ -32,13 +32,13 @@ export default function TechnicianIndex() {
         <>
             <Head title="Technicians" />
             <Container>
-                <Header title={'Techinians'} subtitle={'Manage Technicians'}/>
+                <Header title={'Techinians'} subtitle={'Manage Technicians'} />
                 <div className="px-4 py-6 sm:px-6 lg:p-8">
-                    <div className="mb-8 flex items-center justify-between">
-                        <Search URL={route('admin.technicians.index')}/>
-                        <Link href={route('admin.technicians.create')} className={buttonVariants({ variant: 'default' })}>
+                    <div className="mb-8 flex items-center justify-end">
+                        <Search URL={route('admin.technicians.index')} />
+                        {/* <Link href={route('admin.technicians.create')} className={buttonVariants({ variant: 'default' })}>
                             Create Technician
-                        </Link>
+                        </Link> */}
                     </div>
                     <div>
                         <h2 className="mb-4 text-lg font-semibold">Technicians</h2>

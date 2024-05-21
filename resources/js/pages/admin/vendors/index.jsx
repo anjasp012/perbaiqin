@@ -14,13 +14,13 @@ export default function VendorIndex() {
         <>
             <Head title="Vendors" />
             <Container>
-                <Header title={'Vendors'} subtitle={'Manage vendors'}/>
+                <Header title={'Vendors'} subtitle={'Manage vendors'} />
                 <div className="px-4 py-6 sm:px-6 lg:p-8">
-                    <div className="mb-8 flex items-center justify-between">
-                        <Search URL={route('admin.vendors.index')}/>
-                        <Link href={route('admin.vendors.create')} className={buttonVariants({ variant: 'default' })}>
+                    <div className="mb-8 flex items-center justify-end">
+                        <Search URL={route('admin.vendors.index')} />
+                        {/* <Link href={route('admin.vendors.create')} className={buttonVariants({ variant: 'default' })}>
                             Create Vendor
-                        </Link>
+                        </Link> */}
                     </div>
                     <div>
                         <h2 className="mb-4 text-lg font-semibold">Vendors</h2>

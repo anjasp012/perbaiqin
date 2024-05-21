@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('product_name');
             $table->bigInteger('product_price');
             $table->integer('quantity');
-            $table->boolean('reviewed');
+            $table->boolean('reviewed')->default(false);
             $table->timestamps();
         });
     }

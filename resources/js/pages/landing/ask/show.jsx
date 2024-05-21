@@ -61,6 +61,24 @@ export default function TechnicianShow({ technician }) {
                                     Consultation Now!
                                 </Button>
                             </div>
+                            <div className="rounded-lg bg-gray-200 px-2 py-2 text-sm text-gray-500 dark:bg-gray-700 dark:text-gray-300">
+                                <h6 className="mb-3 border-b pb-2 text-sm font-bold ">Contact Information</h6>
+                                <div className="grid grid-cols-12 text-sm">
+                                    <div className="col-span-3">City</div>
+                                    <div className="col-span-1">:</div>
+                                    <div className="col-span-8">{technician.city}</div>
+                                </div>
+                                <div className="grid grid-cols-12 text-sm">
+                                    <div className="col-span-3">Country</div>
+                                    <div className="col-span-1">:</div>
+                                    <div className="col-span-8">{technician.country}</div>
+                                </div>
+                                <div className="grid grid-cols-12 text-sm">
+                                    <div className="col-span-3">Address</div>
+                                    <div className="col-span-1">:</div>
+                                    <div className="col-span-8">{technician.address}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

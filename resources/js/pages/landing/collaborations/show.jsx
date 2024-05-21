@@ -12,7 +12,7 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import CollaborationCard from './collaboration-card';
 
 export default function CollaborationShow() {
-    const { auth, collaborations, collaboration, reviews } = usePage().props;
+    const { auth, collaborations, collaboration, reviews, technician } = usePage().props;
 
     const addToCartHandler = (e) => {
         e.preventDefault();
@@ -45,18 +45,38 @@ export default function CollaborationShow() {
                                             src={'/storage/' + collaboration.image}
                                         ></Image>
                                     </div>
-                                    <div className="mt-6 flex flex-col md:mt-0">
-                                        <h1 className="mt-2 text-3xl font-semibold leading-none tracking-tight lg:text-4xl">{collaboration.name}</h1>
-                                        <p className="my-3 text-sm text-red-600">{collaboration.technician.name}</p>
-                                        <p className="text-2xl font-semibold lg:text-3xl">{formatRupiah(collaboration.price)}</p>
-                                        <div className="mt-4 text-sm leading-relaxed tracking-tighter text-muted-foreground lg:text-base">
-                                            {collaboration.description}
+                                    <div className="mt-6 flex flex-col justify-between md:mt-0">
+                                        <div>
+                                            <h1 className="mt-2 text-3xl font-semibold leading-none tracking-tight lg:text-4xl">{collaboration.name}</h1>
+                                            <p className="my-3 text-sm text-red-600">{collaboration.technician.name}</p>
+                                            <p className="text-2xl font-semibold lg:text-3xl">{formatRupiah(collaboration.price)}</p>
+                                            <div className="mt-4 text-sm leading-relaxed tracking-tighter text-muted-foreground lg:text-base">
+                                                {collaboration.description}
+                                            </div>
+                                            <div className="mt-6 grid grid-cols-2 gap-2">
+                                                <form onSubmit={addToCartHandler} className="w-full">
+                                                    <Button type="submit">Buy Now</Button>
+                                                    {/* <Button type="submit">Search</Button> */}
+                                                </form>
+                                            </div>
                                         </div>
-                                        <div className="mt-6 grid grid-cols-2 gap-2">
-                                            <form onSubmit={addToCartHandler} className="w-full">
-                                                <Button type="submit">Buy Now</Button>
-                                                {/* <Button type="submit">Search</Button> */}
-                                            </form>
+                                        <div className="rounded-lg bg-gray-200 px-2 py-2 text-sm text-gray-500 dark:bg-gray-700 dark:text-gray-300">
+                                            <h6 className="mb-3 border-b pb-2 text-sm font-bold ">Contact Information</h6>
+                                            <div className="grid grid-cols-12 text-sm">
+                                                <div className="col-span-3">City</div>
+                                                <div className="col-span-1">:</div>
+                                                <div className="col-span-8">{technician.city}</div>
+                                            </div>
+                                            <div className="grid grid-cols-12 text-sm">
+                                                <div className="col-span-3">Country</div>
+                                                <div className="col-span-1">:</div>
+                                                <div className="col-span-8">{technician.country}</div>
+                                            </div>
+                                            <div className="grid grid-cols-12 text-sm">
+                                                <div className="col-span-3">Address</div>
+                                                <div className="col-span-1">:</div>
+                                                <div className="col-span-8">{technician.address}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -36,7 +36,7 @@ class TechnicianSeeder extends Seeder
 
         // Define faker instance
         $faker = Faker::create();
-
+        $city = ['Jakarta', 'Bandung', 'Solo', 'Yogyakarta'];
         // Generate fake technicians
         for ($i = 0; $i < 50; $i++) {
             $name = $faker->name;
@@ -56,8 +56,8 @@ class TechnicianSeeder extends Seeder
                 'phone' => $phone,
                 'ktp' => 'ktp-',
                 'ijazah' => 'ijazah-',
-                'city' => 'city-',
-                'country' => 'country-',
+                'city' => $city[rand(0, 3)],
+                'country' => 'Indonesia',
                 'address' => $address,
                 'price' => $price,
                 'created_at' => now(),

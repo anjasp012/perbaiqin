@@ -10,13 +10,32 @@ class CollaborationController extends Controller
 {
     public function index()
     {
-        $collaborations = Collaboration::with('technician')->when(request()->q, function ($collaborations) {
-            $collaborations = $collaborations->where('name', 'like', '%' . request()->q . '%');
-        })->latest()->paginate(12);
+        $collaborations = Collaboration::with('technician')
+            ->when(request()->q, function ($query) {
+                $query->where('name', 'like', '%' . request()->q . '%');
+            })
+            ->when(request()->cities, function ($query) {
+                $query->whereHas('technician', function ($technicianQuery) {
+                    $technicianQuery->whereIn('city', request()->cities);
+                });
+            })
+            ->latest()
+            ->paginate(12);
         $collaborations->appends(['q' => request()->q]);
-
+        $cities = Collaboration::with('technician')
+            ->get()
+            ->groupBy(function ($collaboration) {
+                return $collaboration->technician->city;
+            })
+            ->keys();
+        $citySelected = request()->cities ?? [];
+        $query = request()->q;
         return inertia('landing/collaborations/index', [
             'collaborations' => $collaborations,
+            'cities' => $cities,
+            'citySelected' => $citySelected,
+            'query' => $query,
+
         ]);
     }
 
@@ -29,6 +48,7 @@ class CollaborationController extends Controller
             'collaboration' => $collaboration,
             'collaborations' => $collaborations,
             'reviews' => $reviews,
+            'technician' => $collaboration->technician,
         ]);
     }
 }

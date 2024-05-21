@@ -36,4 +36,15 @@ class AppointmentController extends Controller
         flashMessage('success', 'Appointment ' . $appointment->status . ' successfully.');
         return redirect()->route('technician.appointments.index');
     }
+
+    public function uploadVideo(Request $request, $id)
+    {
+        $videoPath = $request->file('video')->store('technician/appointment/videos');
+        $appointment = Appointment::findOrFail($id);
+        $appointment->video = $videoPath;
+        $appointment->save();
+
+        flashMessage('success', 'Upload Video Appointment successfully.');
+        return redirect()->route('technician.appointments.index');
+    }
 }
